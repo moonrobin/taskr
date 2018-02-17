@@ -57,3 +57,6 @@ typings/
 # dotenv environment variables file
 .env
 
+/api/node_modules
+/web/node_modules
+/web/dist

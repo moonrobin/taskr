@@ -1,0 +1,23 @@
+#create-profile-form{
+  display: flex;
+}
+
+#create-profile-form input[type="text"]{
+    padding: 10px;
+    color: #777;
+}
+
+#create-profile-form input[type="password"]{
+    padding: 10px;
+    color: #777;
+}
+
+#create-profile-form input[type="submit"]{
+    padding: 10px;
+    background: #7f4cc1;
+    border-radius: 0 4px 4px 0;
+    border: 2px solid #7f4cc1;
+    color: #fff;
+    text-transform: uppercase;
+    cursor: pointer;
+}

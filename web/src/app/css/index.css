@@ -1,0 +1,17 @@
+body{
+  background: #eee;
+  margin: 20px;
+  font-family: tahoma;
+}
+
+#root{
+  width: fit-content;
+  margin: 0 auto;
+  background: #fff;
+  border-top: 3px solid #7f4cc1;
+  padding: 10px;
+  border-radius: 2px;
+  box-shadow: 1px 3px 5px rgba(0,0,0,0.2);
+  color: #333;
+}
+
