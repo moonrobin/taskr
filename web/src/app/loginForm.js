@@ -1,6 +1,7 @@
 import React from 'react';
 import './css/loginform.css';
-import {Link, withRouter} from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import history from './history';
 
 class LoginForm extends React.Component{
   constructor(props) {
@@ -30,10 +31,14 @@ class LoginForm extends React.Component{
     var url = `http://localhost:3000/login/${this.refs.username.value}/${this.refs.password.value}`
     fetch(url).then(function(response) {
       if (response.ok) {
-        //TODO make this redirect
+        history.push('/profile');
+      }else{
+        alert('Invalid username or password');
+        this.refs.username.value = '';
+        this.refs.password.value = '';  
       }
     });
   }
 }
 
-module.exports = withRouter(LoginForm);
+module.exports = LoginForm;
