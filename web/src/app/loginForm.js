@@ -32,7 +32,7 @@ class LoginForm extends React.Component{
     fetch(url).then(function(response) {
       if (response.ok) {
         history.push('/profile');
-      }else{
+      } else {
         alert('Invalid username or password');
         this.refs.username.value = '';
         this.refs.password.value = '';  
