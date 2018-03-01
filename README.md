@@ -14,20 +14,9 @@ Quick Start
 
 Database Initialization
 ----
-* In DataGrip, create a new database called `testdb`
-* With the database `testdb` as the target, execute
-```SQL
-CREATE TABLE useraccount
-(
-  username VARCHAR(100) NOT NULL
-    CONSTRAINT useraccount_pkey
-    PRIMARY KEY,
-  password VARCHAR(32)
-);
-
-CREATE UNIQUE INDEX upper_index
-  ON useraccount (upper(username :: TEXT));
-```
+* In DataGrip, create a new database called `taskrdb`
+* Open `db/init.sql` in DataGrip
+* Right click the tab and select Run, set the target target to `taskrdb`
 
 Starting the api server
 ----
