@@ -8,7 +8,7 @@ const { Client } = require('pg')
 const client = new Client({
   user: 'postgres',
   host: 'localhost',
-  database: 'testdb',
+  database: 'taskrdb',
   password: 'kappa123',
   port: 5432,
 })
@@ -19,7 +19,7 @@ console.log('Now listening for requests on port 3000...');
 
 app.get('/login/:username/:password', function(req, res){
 
-  var text = `SELECT 1 FROM useraccount WHERE username = $1 AND password = MD5($2)`;
+  var text = `SELECT 1 FROM users WHERE username = $1 AND password = MD5($2)`;
   values = [req.params.username, req.params.password];
 
   client.query(text, values, (err, result) => {
@@ -37,10 +37,10 @@ app.get('/login/:username/:password', function(req, res){
   });
 });
 
-app.post('/createuser/:username/:password', function(req, res){
+app.post('/createuser/:username/:password/:name', function(req, res){
 
-  var text = `INSERT INTO useraccount VALUES($1, MD5($2))`;
-  values = [req.params.username, req.params.password];
+  var text = `INSERT INTO users VALUES($1, MD5($2), $3)`;
+  values = [req.params.username, req.params.password, req.params.name];
   
   client.query(text, values, (err, result) => {
     if (err) {

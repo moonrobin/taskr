@@ -13,9 +13,12 @@ class CreateProfile extends React.Component{
     return(
       <div>
         <Link to={'/'}>Login</Link>
-                <div id="create-profile-form">
+        <div id="create-profile-form">
           <form id="username-input">
             <input type="text" required ref="username" placeholder="Username"/>
+          </form>
+          <form id="name-input">
+            <input type="text" required ref="name" placeholder="Name"/>
           </form>
           <form id="password-input" >
             <input type="password" required ref="password" placeholder="Password" />
@@ -35,7 +38,7 @@ class CreateProfile extends React.Component{
     var confirmPassword = this.refs.passwordConfirm.value;
 
     if (password == confirmPassword){
-      var url = `http://localhost:3000/createuser/${this.refs.username.value}/${this.refs.password.value}`
+      var url = `http://localhost:3000/createuser/${this.refs.username.value}/${this.refs.password.value}/${this.refs.name.value}`
       fetch(url,{method: "POST"}).then(function(response) {
         if (response.ok) {
           console.log('User Created');
