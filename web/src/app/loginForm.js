@@ -9,10 +9,11 @@ class LoginForm extends React.Component{
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <div>
         <Link to={'/create'}>Create Account</Link>
+        <Link to={'/tasks'}>Tasks</Link>
         <div id="login-form">
           <form id="username-input">
             <input type="text" required ref="username" placeholder="Username"/>
@@ -32,7 +33,7 @@ class LoginForm extends React.Component{
     fetch(url).then(function(response) {
       if (response.ok) {
         history.push('/profile');
-      }else{
+      } else {
         alert('Invalid username or password');
         this.refs.username.value = '';
         this.refs.password.value = '';  
