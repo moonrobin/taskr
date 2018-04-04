@@ -3,6 +3,12 @@ import './css/loginform.css';
 import {Link} from 'react-router-dom';
 import history from './history';
 
+// necessary for storing reusing session cookies properly
+var fetchOptions = {
+  method: 'GET',
+  credentials: 'include'
+}
+
 class LoginForm extends React.Component{
   constructor(props) {
     super(props);
@@ -30,7 +36,7 @@ class LoginForm extends React.Component{
   handleSubmit(e){
     e.preventDefault();
     var url = `http://localhost:3000/login/${this.refs.username.value}/${this.refs.password.value}`
-    fetch(url).then(function(response) {
+    fetch(url, fetchOptions).then(function(response) {
       if (response.ok) {
         history.push('/profile');
       } else {
