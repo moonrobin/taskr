@@ -12,8 +12,11 @@ class LoginForm extends React.Component{
   render() {
     return (
       <div>
-        <Link to={'/create'}>Create Account</Link>
-        <Link to={'/tasks'}>Tasks</Link>
+        <div><Link to={'/create'}>Create Account</Link></div>
+        <div><Link to={'/search'}>Task Search</Link></div>
+        <div><Link to={'/task'}>Task Display</Link></div>
+        <div><Link to={'/mytasks'}>My Tasks</Link></div>
+        <div><Link to={'/mybids'}>My Bids</Link></div>
         <div id="login-form">
           <form id="username-input">
             <input type="text" required ref="username" placeholder="Username"/>

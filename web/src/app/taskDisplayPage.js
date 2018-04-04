@@ -2,55 +2,28 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import history from './history';
 
-import './css/taskdisplaypage.css';
-import mockData from './mockdata/data.js';
+import DetailItem from './detailItem.js';
+import mockData from './mockdata/data2.js';
 
 class TaskDisplayPage extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      data: null
-    }
-    this.querySubmit = this.querySubmit.bind(this);
+      data: mockData
+    };
   }
 
-  querySubmit() {
-    this.setState({data: mockData})
-  }
-
-  renderList() {
+  render() {
     var rows = [];
+    rows.push();
     for (var key in mockData) {
-      rows.push(`${key} ${mockData[key]["name"]}. ${mockData[key]["desc"]}. Requestor: ${mockData[key]["requestorId"]}`);
+      var row = <DetailItem attr={key} value={mockData[key]}/>;
+      rows.push(row);
     }
     return(
       <div>
+        <h3>Task Details</h3>
         {rows}
-      </div>
-    );
-  }
-
-  render(){
-    return(
-      <div>
-        <div>
-          <form id="query">
-              <input type="text" placeholder="Search tasks..."/>
-
-              <div id="timefield">
-                <label>Start time</label><br/>
-                <input id="start" type="datetime-local" />
-              </div>
-              <div id="timefield">
-                <label>End time</label><br/>
-                <input id="end" type="datetime-local" />
-              </div>
-              <button id="submit" type="button" value="Search" onClick={this.querySubmit}>Search</button>
-          </form>
-        </div>
-        <div>
-          {this.state.data && this.renderList()}
-        </div>
       </div>
     );
   }
