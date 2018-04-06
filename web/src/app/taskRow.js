@@ -5,6 +5,12 @@ import './css/taskrow.css';
 class TaskRow extends React.Component {
   constructor(props) {
     super(props);
+    this.popup = this.popup.bind(this);
+  }
+
+  popup() {
+    var url = `/task/${this.props.id}`
+    window.open('/task', '_blank');
   }
 
   render() {
@@ -13,7 +19,7 @@ class TaskRow extends React.Component {
         <div>
           <div id='item-box'>
             <div id='name'>
-              {this.props.name}
+              {this.props.title}
             </div>
           </div>
           <div id='item-box'>
@@ -32,7 +38,7 @@ class TaskRow extends React.Component {
             </div>
           </div>
           <div id='item-box'>
-            <div id='bid'>
+            <div id='details'>
               Details
             </div>
           </div>
@@ -62,7 +68,7 @@ class TaskRow extends React.Component {
           </div>
         </div>
         <div id='item-box'>
-          <button id="bid-button" type="button" value="Bid">Details</button>
+          <button id="details-button" type="button" onClick={this.popup}>Details</button>
         </div>
       </div>
     );

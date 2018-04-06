@@ -11,12 +11,12 @@ class TaskSearchPage extends React.Component{
     super(props);
     this.state = {
       data: null
-    }
+    };
     this.querySubmit = this.querySubmit.bind(this);
   }
 
   querySubmit() {
-    this.setState({data: mockData})
+    this.setState({data: mockData});
   }
 
   renderList() {
@@ -51,7 +51,7 @@ class TaskSearchPage extends React.Component{
                 <label>End time</label><br/>
                 <input id="end" type="datetime-local" />
               </div>
-              <button id="submit" type="button" value="Search" onClick={this.querySubmit}>Search</button>
+              <button id="submit" type="button" onClick={this.querySubmit}>Search</button>
           </form>
         </div>
         {this.state.data && this.renderList()}
