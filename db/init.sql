@@ -13,6 +13,7 @@ CREATE UNIQUE INDEX upper_index
 CREATE TABLE tasks
 (
   id SERIAL PRIMARY KEY,
+  currentBid REAL,
   acceptBid REAL DEFAULT 0,
   acceptTime TIMESTAMP,
   taskStartTime TIMESTAMP,
@@ -21,6 +22,7 @@ CREATE TABLE tasks
   description VARCHAR(999) NOT NULL,
   requester VARCHAR(100) NOT NULL,
   FOREIGN KEY (requester) REFERENCES users(username)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE bids
@@ -28,6 +30,8 @@ CREATE TABLE bids
   bid REAL,
   task_id SERIAL PRIMARY KEY,
   username VARCHAR(100),
-  FOREIGN KEY (task_id) REFERENCES tasks(id),
+  FOREIGN KEY (task_id) REFERENCES tasks(id)
+    ON DELETE CASCADE,
   FOREIGN KEY (username) REFERENCES users(username)
+    ON DELETE CASCADE
 );
