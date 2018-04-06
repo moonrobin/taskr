@@ -1,0 +1,46 @@
+#row {
+    padding: 5px 0px 5px 0px;
+    border-bottom: 1px solid #000000;
+}
+
+#item-box {
+    vertical-align: middle;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#name {
+    width: 200px;
+}
+
+#desc {
+    width: 300px;
+}
+
+#requestor-id {
+    width: 100px;
+    padding-left: 5px;
+}
+
+#current-bid {
+    width: 100px;
+    /*text-align: right;*/
+}
+
+#bid {
+    width: 80px;
+}
+
+#bid-button {
+    flex-basis: 0;
+    flex-grow: 3;
+    padding: 5px;
+    background: #7f4cc1;
+    border-radius: 0 4px 4px 0;
+    border: 2px solid #7f4cc1;
+    color: #fff;
+    display: inline-block;
+    text-transform: capitalize;
+    cursor: pointer;
+}

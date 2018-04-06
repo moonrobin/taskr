@@ -7,7 +7,10 @@ import {Router, Route, Link} from 'react-router-dom';
 var LoginForm = require('./loginForm');
 var MockProfile = require('./mockProfile');
 var CreateProfile = require('./createProfile');
+var TaskSearchPage = require('./taskSearchPage');
 var TaskDisplayPage = require('./taskDisplayPage');
+var MyTasksPage = require('./myTasksPage');
+var MyBidsPage = require('./myBidsPage');
 
 class App extends React.Component{
   render(){
@@ -17,7 +20,10 @@ class App extends React.Component{
          <Route exact path="/" component={LoginForm} />
          <Route exact path="/create" component={CreateProfile} />
          <Route exact path="/profile" component={MockProfile} />
-         <Route exact path="/tasks" component={TaskDisplayPage} />
+         <Route exact path="/search" component={TaskSearchPage} />
+         <Route exact path="/task" component={TaskDisplayPage} />
+         <Route exact path="/mytasks" component={MyTasksPage} />
+         <Route exact path="/mybids" component={MyBidsPage} />
       </div>    
     </Router> 
     );
