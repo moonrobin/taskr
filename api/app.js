@@ -35,15 +35,19 @@ client.connect();
 app.listen(3000);
 console.log('Now listening for requests on port 3000...');
 
-
-
 // Login Endpoint
 app.get('/login/:username/:password', function(req, res){
 
-  var text = `SELECT username FROM users WHERE username = $1 AND password = MD5($2)`;
+  var queryText = `
+  SELECT username 
+  FROM users 
+  WHERE username = $1 
+  AND password = MD5($2)
+  `;
+
   values = [req.params.username, req.params.password];
 
-  client.query(text, values, (err, result) => {
+  client.query(queryText, values, (err, result) => {
     if (err) {
       console.log(err.stack);
     } else {
@@ -54,7 +58,7 @@ app.get('/login/:username/:password', function(req, res){
       } else {
         console.log('No such user found');
         res.sendStatus(401);
-      }
+      } 
     }
   });
 });
@@ -70,10 +74,10 @@ app.get('/logout', auth, function (req, res) {
 // Sign-up endpoint
 app.post('/createuser/:username/:password/:name', function(req, res){
 
-  var text = `INSERT INTO users VALUES($1, MD5($2), $3)`;
+  var queryText = `INSERT INTO users VALUES($1, MD5($2), $3)`;
   values = [req.params.username, req.params.password, req.params.name];
   
-  client.query(text, values, (err, result) => {
+  client.query(queryText, values, (err, result) => {
     if (err) {
       console.log(err.stack);
       res.sendStatus(400);
@@ -88,4 +92,63 @@ app.post('/createuser/:username/:password/:name', function(req, res){
 app.get('/content', auth, function (req, res) {
   // later we will read req.session.user and use it for our queries to DB
   res.send('User will be able to see this only after they login');
+});
+
+// app.get('/tasks', auth, function(req, res){ 
+app.get('/tasks', function(req, res){ // TODO: add auth back in
+  var values;
+  var queryText;
+  
+  if (req.query.requester) {
+    values = [req.query.requester];
+    queryText = `
+    select *
+    from tasks
+    where requester = $1
+    `;
+  } else if (req.query.bidder) {
+    values = [req.query.bidder];
+    queryText = `
+    select *
+    from tasks
+    where id in ( select task_id from
+    bids where username = $1)
+    `;
+  } else if (req.query.taskid) {
+    values = [req.query.taskid];
+    queryText = `
+    select *
+    from tasks
+    where id = $1
+    `;
+  } else if (Object.keys(req.query).length != 0){
+    var taskStartTime = req.query.taskstarttime ? req.query.taskstarttime : '-infinity';
+    var taskEndTime = req.query.taskendtime ? req.query.taskendtime : 'infinity';
+    var titleQuery = req.query.titlequery ? req.query.titlequery : '';
+    values = [taskStartTime, taskEndTime, titleQuery];
+    queryText = `
+    select *
+    from tasks t
+    where t.taskStartTime >= $1
+    and t.taskEndTIme <= $2
+    and t.title ilike '%' || $3 || '%'
+    `;
+    console.log("Query:" + queryText);
+    console.log("Values:" + values);
+
+  } else {
+    queryText = `
+    select *
+    from tasks
+    `;
+  }
+
+  client.query(queryText, values, (err, result) => {
+    if (err) {
+      console.log(err.stack);
+    } else {
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(result.rows));
+    }
+  });
 });
