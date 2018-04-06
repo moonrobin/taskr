@@ -1,0 +1,8 @@
+#attr {
+    width: 100px;
+}
+
+#value {
+    width: 600px;
+    overflow: auto;
+}
