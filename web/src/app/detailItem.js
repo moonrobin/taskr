@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './css/detailitem.css';
+import './css/displaypage.css';
 
 class DetailItem extends React.Component {
   constructor(props) {
@@ -9,13 +9,13 @@ class DetailItem extends React.Component {
 
   render() {
     return(
-      <div id='row'>
-        <div id='item-box'>
+      <div id='detail-row'>
+        <div id='detail-box'>
           <div id='attr'>
             {this.props.attr}
           </div>
         </div>
-        <div id='item-box'>
+        <div id='detail-box'>
           <div id='value'>
             {this.props.value}
           </div>

@@ -11,12 +11,12 @@ class MyTasksPage extends React.Component{
     super(props);
     this.state = {
       data: null
-    }
+    };
     this.querySubmit = this.querySubmit.bind(this);
   }
 
   querySubmit() {
-    this.setState({data: mockData})
+    this.setState({data: mockData});
   }
 
   renderList() {

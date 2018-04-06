@@ -12,12 +12,12 @@ class CreateProfile extends React.Component{
   render(){
     return(
       <div>
+        <h3>Create Account</h3>
         <Link to={'/'}>Login</Link>
         <div id="create-profile-form">
           <form id="username-input">
             <input type="text" required ref="username" placeholder="Username"/>
-          </form>
-          <form id="name-input">
+          </form>          <form id="name-input">
             <input type="text" required ref="name" placeholder="Name"/>
           </form>
           <form id="password-input" >

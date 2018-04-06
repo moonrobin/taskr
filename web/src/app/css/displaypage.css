@@ -1,0 +1,29 @@
+#attr {
+	color: #7f4cc1;
+	font-weight: bold;
+	font-size: 14px;
+    width: 130px;
+}
+
+#value {
+    width: 600px;
+}
+
+#detail-box {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+#detail-row {
+	margin: 10px 0px;
+}
+
+#bid-button {
+	margin-right: 10px;
+}
+
+#delete-button {
+	background: red;
+    border: 2px solid red;
+    text-transform: uppercase;
+}
