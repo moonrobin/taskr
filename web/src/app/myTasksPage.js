@@ -29,7 +29,11 @@ class MyTasksPage extends React.Component{
     return(
       <div id='task-listing'>
         <div id='task-listing-header'>
-          <TaskRow header name="Task" desc="Description" requestorId="Requestor" currentBid="Current Bid"/>
+          <TaskRow header title="Task"
+                          requestor="Requestor"
+                          taskstarttime="Start Time"
+                          taskendtime="End Time"
+                          currentbid="Current Bid"/>
         </div>
         {rows}
       </div>
