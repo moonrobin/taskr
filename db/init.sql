@@ -27,11 +27,12 @@ CREATE TABLE tasks
 
 CREATE TABLE bids
 (
-  bid REAL,
-  task_id SERIAL PRIMARY KEY,
+  bid REAL NOT NULL,
+  task_id SERIAL,
   username VARCHAR(100),
   FOREIGN KEY (task_id) REFERENCES tasks(id)
     ON DELETE CASCADE,
   FOREIGN KEY (username) REFERENCES users(username)
-    ON DELETE CASCADE
+    ON DELETE CASCADE,
+  PRIMARY KEY (task_id, username)
 );
