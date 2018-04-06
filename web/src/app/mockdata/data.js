@@ -1,15 +1,25 @@
 var data = {
 	1: {
-		name: "Clean my house",
-		desc: "Please clean my beautiful house.",
-		requestorId: 63229,
-		currentBid: 60.20
+		id: 420,
+		title: "Clean my house",
+		description: "Please clean my beautiful house.",
+		requestor: "robin",
+		currentbid: null,
+		acceptbid: 18,
+		accepttime: "2018-04-04T07:33:06.000Z",
+		taskstarttime: "2018-05-08T08:36:42.000Z",
+		taskendtime: "2018-06-05T20:58:22.000Z"
 	},
 	2: {
-		name: "Get groceries",
-		desc: "Please deliver my groceries to 123 Fake Street. Thanks.",
-		requestorId: 1110,
-		currentBid: -1
+		id: 69,
+		title: "Get my groceries",
+		description: "Deliver my fresh groceries from Fairprice to 123 Fake Street, Tuas Link, Singapore. Thanks.",
+		requestor: "tonymonta",
+		currentbid: 20.80,
+		acceptbid: 15,
+		accepttime: "2018-07-04T07:33:00.000Z",
+		taskstarttime: "2018-08-08T08:36:00.000Z",
+		taskendtime: "2018-09-05T20:58:00.000Z"
 	}
 };
 

@@ -18,6 +18,7 @@ class LoginForm extends React.Component{
   render() {
     return (
       <div>
+        <h3>Taskr</h3>
         <div><Link to={'/create'}>Create Account</Link></div>
         <div><Link to={'/search'}>Task Search</Link></div>
         <div><Link to={'/task'}>Task Display</Link></div>
