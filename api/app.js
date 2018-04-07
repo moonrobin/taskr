@@ -149,7 +149,7 @@ app.get('/tasks', function(req, res){ // TODO: add auth back in
 });
 
 // Bid endpoint
-app.post('/bid/:task/:bid/:username', function(req, res){
+app.post('/bid/:task/:bid/', function(req, res){
   var validationValues = [req.params.task, req.params.bid];
   var validationQuery = `
   SELECT 1
@@ -162,7 +162,7 @@ app.post('/bid/:task/:bid/:username', function(req, res){
       res.sendStatus(400);
       return;
     } else {
-      values = [req.params.task, req.params.bid, req.params.username];
+      values = [req.params.task, req.params.bid, req.session.user];
       var queryText = `
       INSERT INTO bids (task_id, bid, username)
       VALUES ($1, $2, $3) ON CONFLICT (task_id, username) DO UPDATE
@@ -185,7 +185,7 @@ app.post('/bid/:task/:bid/:username', function(req, res){
               console.log(err.stack);
               res.sendStatus(400);
             } else {
-              console.log(`${req.params.username} has bid on ${req.params.task} for $${req.params.bid}`);
+              console.log(`${req.session.user} has bid on ${req.params.task} for $${req.params.bid}`);
               res.sendStatus(200);
             }
           });
@@ -196,14 +196,14 @@ app.post('/bid/:task/:bid/:username', function(req, res){
 });
 
 // createtask endpoint
-app.post('/createtask/:title/:requester/:acceptbid/:taskendtime', function(req, res){
+app.post('/createtask/:title/:acceptbid/:taskendtime', function(req, res){
   values = [
     req.params.acceptbid,
     req.query.accepttime,
     req.params.taskendtime,
     req.params.title,
     req.query.description,
-    req.params.requester
+    req.session.user
   ];
   if (req.query.taskstarttime) {
     values.push(req.query.taskstarttime);
@@ -222,7 +222,7 @@ app.post('/createtask/:title/:requester/:acceptbid/:taskendtime', function(req, 
       console.log(err.stack);
       res.sendStatus(400);
     } else {
-      console.log(`${req.query.requester} has created task: ${req.query.title} with startbid $${req.query.acceptbid}`);
+      console.log(`${req.session.user} has created task: ${req.query.title} with startbid $${req.query.acceptbid}`);
       res.sendStatus(200);
     }
   });
