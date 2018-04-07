@@ -21,7 +21,7 @@ class TaskDisplayPage extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      data: mockData
+      data: null
     };
     this.bidTask = this.bidTask.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
@@ -64,13 +64,22 @@ class TaskDisplayPage extends React.Component{
 
   render() {
     var rows = [];
-    rows.push();
     for(var key in this.state.data) {
       if(key != "id" && mockData[key] != null) {
         var row = <DetailItem attr={d[key]} value={this.state.data[key]}/>;
         rows.push(row);
       }
     }
+
+    if ( !rows.length ){
+      return(
+        <div>
+          <h3>Task Details</h3>
+          <p> Task not found </p>
+        </div>
+      );
+    }
+
     return(
       <div>
         <h3>Task Details</h3>
