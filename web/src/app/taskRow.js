@@ -24,7 +24,7 @@ class TaskRow extends React.Component {
           </div>
           <div id='item-box'>
             <div id='requestor-id'>
-              {this.props.requestor}
+              {this.props.requester}
             </div>
           </div>
           <div id='item-box'>
@@ -49,6 +49,13 @@ class TaskRow extends React.Component {
           </div>
         </div>
       );
+    } else if (this.props.empty) {
+      return(
+        <div id='row'>
+          No tasks were found.
+        </div>
+      );
+
     }
     return(
       <div id='row'>
@@ -59,7 +66,7 @@ class TaskRow extends React.Component {
         </div>
         <div id='item-box'>
           <div id='requestor-id'>
-            {this.props.requestor}
+            {this.props.requester}
           </div>
         </div>
         <div id='item-box'>

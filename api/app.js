@@ -100,14 +100,14 @@ app.get('/tasks', function(req, res){ // TODO: add auth back in
   var queryText;
   
   if (req.query.requester) {
-    values = [req.query.requester];
+    values = [req.session.user];
     queryText = `
     select *
     from tasks
     where requester = $1
     `;
   } else if (req.query.bidder) {
-    values = [req.query.bidder];
+    values = [req.session.user];
     queryText = `
     select *
     from tasks
