@@ -13,13 +13,13 @@ CREATE UNIQUE INDEX upper_index
 CREATE TABLE tasks
 (
   id SERIAL PRIMARY KEY,
-  currentBid REAL,
+  currentBid REAL, -- Null value indicates no bid has been placed
   acceptBid REAL DEFAULT 0,
   acceptTime TIMESTAMP,
-  taskStartTime TIMESTAMP DEFAULT '-infinity',
-  taskEndTime TIMESTAMP DEFAULT 'infinity' NOT NULL,
+  taskStartTime TIMESTAMP DEFAULT '-infinity' NOT NULL,
+  taskEndTime TIMESTAMP NOT NULL,
   title VARCHAR(100) NOT NULL,
-  description VARCHAR(999) NOT NULL,
+  description VARCHAR(999),
   requester VARCHAR(100) NOT NULL,
   FOREIGN KEY (requester) REFERENCES users(username)
     ON DELETE CASCADE

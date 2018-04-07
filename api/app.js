@@ -73,10 +73,8 @@ app.get('/logout', auth, function (req, res) {
 
 // Sign-up endpoint
 app.post('/createuser/:username/:password/:name', function(req, res){
-
   var queryText = `INSERT INTO users VALUES($1, MD5($2), $3)`;
   values = [req.params.username, req.params.password, req.params.name];
-  
   client.query(queryText, values, (err, result) => {
     if (err) {
       console.log(err.stack);
@@ -95,7 +93,6 @@ app.get('/content', auth, function (req, res) {
 });
 
 // tasks endpoint
-// app.get('/tasks', auth, function(req, res){ 
 app.get('/tasks', function(req, res){ // TODO: add auth back in
   var values;
   var queryText;
@@ -123,9 +120,9 @@ app.get('/tasks', function(req, res){ // TODO: add auth back in
     WHERE id = $1
     `;
   } else if (Object.keys(req.query).length != 0){
-    var taskStartTime = req.query.taskstarttime ? req.query.taskstarttime : '-infinity';
-    var taskEndTime = req.query.taskendtime ? req.query.taskendtime : 'infinity';
-    var titleQuery = req.query.titlequery ? req.query.titlequery : '';
+    var taskStartTime = req.query.taskstarttime || '-infinity';
+    var taskEndTime = req.query.taskendtime || 'infinity';
+    var titleQuery = req.query.titlequery || '';
     values = [taskStartTime, taskEndTime, titleQuery];
     queryText = `
     SELECT *
@@ -153,33 +150,45 @@ app.get('/tasks', function(req, res){ // TODO: add auth back in
 
 // Bid endpoint
 app.post('/bid/:task/:bid/:username', function(req, res){
-  values = [req.params.task, req.params.bid, req.params.username];
-  var queryText = `
-  INSERT INTO bids (task_id, bid, username)
-  VALUES ($1, $2, $3) ON CONFLICT (task_id, username) DO UPDATE
-  SET bid = $2
+  var validationValues = [req.params.task, req.params.bid];
+  var validationQuery = `
+  SELECT 1
+  FROM tasks
+  WHERE id = $1 AND currentbid != NULL AND currentbid < $2
   `;
-  console.log("BIG BOOTY");
-  client.query(queryText, values, (err, result) => {
-    if (err) {
-      console.log("BITCHES");
-      console.log(err.stack);
+  client.query(validationQuery, validationValues, (err, result) => {
+    if (err || result.rows[0]) { // if we get anything back from this, then this bid isn't valid
+      console.log('Bid must be lower than current bid');
       res.sendStatus(400);
+      return;
     } else {
-      values = [req.params.task, req.params.bid]
-      queryText = `
-      UPDATE tasks
-      SET currentBid = $2
-      WHERE id = $1
+      values = [req.params.task, req.params.bid, req.params.username];
+      var queryText = `
+      INSERT INTO bids (task_id, bid, username)
+      VALUES ($1, $2, $3) ON CONFLICT (task_id, username) DO UPDATE
+      SET bid = $2
       `;
-
       client.query(queryText, values, (err, result) => {
         if (err) {
           console.log(err.stack);
           res.sendStatus(400);
         } else {
-          console.log(`${req.params.username} has bid on ${req.params.task} for $${req.params.bid}`);
-          res.sendStatus(200);
+          values = [req.params.task, req.params.bid]
+          queryText = `
+          UPDATE tasks
+          SET currentBid = $2
+          WHERE id = $1
+          `;
+
+          client.query(queryText, values, (err, result) => {
+            if (err) {
+              console.log(err.stack);
+              res.sendStatus(400);
+            } else {
+              console.log(`${req.params.username} has bid on ${req.params.task} for $${req.params.bid}`);
+              res.sendStatus(200);
+            }
+          });
         }
       });
     }
@@ -187,5 +196,52 @@ app.post('/bid/:task/:bid/:username', function(req, res){
 });
 
 // createtask endpoint
+app.post('/createtask/:title/:requester/:acceptbid/:taskendtime', function(req, res){
+  values = [
+    req.params.acceptbid,
+    req.query.accepttime,
+    req.params.taskendtime,
+    req.params.title,
+    req.query.description,
+    req.params.requester
+  ];
+  if (req.query.taskstarttime) {
+    values.push(req.query.taskstarttime);
+  }
+  // RL:Two queries are a workaround for sanitization 
+  var queryText = req.query.taskstarttime ? `
+  INSERT INTO tasks (acceptBid, acceptTime, taskEndTime, title, description, requester, taskstartTime) 
+  VALUES ($1, $2, $3, $4, $5, $6, $7)`:
+  `
+  INSERT INTO tasks (acceptBid, acceptTime, taskEndTime, title, description, requester) 
+  VALUES ($1, $2, $3, $4, $5, $6)
+  `;
+  console.log(queryText)
+  client.query(queryText, values, (err, result) => {
+    if (err) {
+      console.log(err.stack);
+      res.sendStatus(400);
+    } else {
+      console.log(`${req.query.requester} has created task: ${req.query.title} with startbid $${req.query.acceptbid}`);
+      res.sendStatus(200);
+    }
+  });
+});
 
 // deletetask endpoint
+app.delete('/deletetask/:taskid', function(req, res){
+  var values = [req.params.taskid];
+  var queryText = `
+  DELETE FROM tasks
+  where id = $1
+  `;
+  client.query(queryText, values, (err, result) => {
+    if (err) {
+      console.log(err.stack);
+      res.sendStatus(400);
+    } else {
+      console.log(`task: ${req.params.taskid} has been deleted`);
+      res.sendStatus(200);
+    }
+  });
+});
