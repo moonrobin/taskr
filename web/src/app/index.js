@@ -21,7 +21,7 @@ class App extends React.Component{
          <Route exact path="/create" component={CreateProfile} />
          <Route exact path="/profile" component={MockProfile} />
          <Route exact path="/search" component={TaskSearchPage} />
-         <Route exact path="/task" component={TaskDisplayPage} />
+         <Route exact path="/task/*" component={TaskDisplayPage} />
          <Route exact path="/mytasks" component={MyTasksPage} />
          <Route exact path="/mybids" component={MyBidsPage} />
       </div>    
