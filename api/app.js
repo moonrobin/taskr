@@ -229,6 +229,28 @@ app.post('/createtask/:title/:startbid/:taskendtime', function(req, res){
   });
 });
 
+// updatetask endpoint
+app.post('/updatetask/:taskid', function(req, res){
+  values = [req.params.taskid];
+  var queryText = `
+  UPDATE tasks
+  SET acceptbid = ${req.query.acceptbid || 'acceptbid'},
+  description = ${"'"+req.query.description+"'" || 'description'},
+  accepttime = ${"'"+req.query.accepttime+"'" || 'accepttime'}
+  WHERE id = $1
+  `;
+  console.log(queryText)
+  client.query(queryText, values, (err, result) => {
+    if (err) {
+      console.log(err.stack);
+      res.sendStatus(400);
+    } else {
+      console.log(`Task: ${req.params.taskid} has been updated`);
+      res.sendStatus(200);
+    }
+  });
+});
+
 // deletetask endpoint
 app.delete('/deletetask/:taskid', function(req, res){
   var values = [req.params.taskid];
