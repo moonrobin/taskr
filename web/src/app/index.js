@@ -12,7 +12,7 @@ var TaskDisplayPage = require('./taskDisplayPage');
 var MyTasksPage = require('./myTasksPage');
 var MyBidsPage = require('./myBidsPage');
 var NewTaskPage = require('./newTaskPage');
-var UpdateTaskPage = require('.updateTaskPage');
+var UpdateTaskPage = require('./updateTaskPage');
 
 class App extends React.Component{
   render(){

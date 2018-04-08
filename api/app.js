@@ -278,11 +278,12 @@ app.post('/createtask/:title/:startbid/:taskendtime', function(req, res){
 // updatetask endpoint
 app.post('/updatetask/:taskid', function(req, res){
   values = [req.params.taskid];
+
   var queryText = `
   UPDATE tasks
   SET acceptbid = ${req.query.acceptbid || 'acceptbid'},
-  description = ${"'"+req.query.description+"'" || 'description'},
-  accepttime = ${"'"+req.query.accepttime+"'" || 'accepttime'}
+  description = ${req.query.description ? "'"+ req.query.description+"'" : 'description'},
+  accepttime = ${req.query.accepttime ? "'"+req.query.accepttime+"'" : 'accepttime'}
   WHERE id = $1
   `;
   console.log(queryText)
