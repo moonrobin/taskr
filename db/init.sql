@@ -15,7 +15,7 @@ CREATE TABLE tasks
   id SERIAL PRIMARY KEY, -- Auto incrementing unique ID for each task
   startBid REAL NOT NULL, -- Price which bidding starts
   currentBid REAL, -- Current lowest bid on task (Null indicates no bid was placed)
-  acceptBid REAL DEFAULT 0, -- If the bid drops to this price, then the task is auto awarded
+  acceptBid REAL DEFAULT 0 NOT NULL, -- If the bid drops to this price, then the task is auto awarded
   acceptTime TIMESTAMP, -- Optional time to end the bid
   taskStartTime TIMESTAMP DEFAULT '-infinity' NOT NULL,
   taskEndTime TIMESTAMP NOT NULL,
