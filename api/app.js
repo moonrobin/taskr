@@ -40,18 +40,43 @@ console.log('Now listening for requests on port 3000...');
 cron.schedule('* * * * *', function(){
 	// Send a query that updates tasks with no bids to 'unfulfilled'
 	var unfulfilledQuery = `
-	UPDATE
+	UPDATE tasks
+	SET state = 'unfulfilled'
+	WHERE state = 'bidding' AND NOT EXISTS (SELECT * FROM bids WHERE task_id = id) AND LOCALTIMESTAMP(0) >= acceptTime;
 	`
-	
-	//Send a query that updates tasks with bids to 'awarded' and award to the bidder (most complicated)
+	client.query(unfulfilledQuery, (err, result) => {
+    if (err) {
+      console.log(err.stack);
+    } else {
+		console.log("succeeded in updating bidding tasks to unfulfilled tasks");
+    }
+	});
+	//Send a query that updates tasks with bids to 'awarded' and award to the bidder
 	var awardedQuery = `
-	
+	UPDATE tasks
+	SET state = 'awarded', awardedto = (SELECT username FROM bids WHERE task_id = id AND bid = currentBid LIMIT 1)
+	WHERE state = 'bidding' AND EXISTS (SELECT * FROM bids WHERE task_id = id) AND (LOCALTIMESTAMP(0) >= acceptTime OR currentBid <= acceptBid);
 	`
-	
+	client.query(awardedQuery, (err, result) => {
+    if (err) {
+      console.log(err.stack);
+    } else {
+		console.log("succeeded in updating bidding tasks to awarded tasks");
+    }
+	});
 	//Send a query that sets 'awarded' tasks to 'completed' if they have passed their taskEndTime
 	var completedQuery = `
-	
+	UPDATE tasks
+	SET state = 'complete'
+	WHERE state = 'awarded' AND LOCALTIMESTAMP(0) >= taskEndTime;
 	`
+	client.query(completedQuery, (err, result) => {
+    if (err) {
+      console.log(err.stack);
+    } else {
+		console.log("succeeded in updating awarded tasks to completed tasks");
+    }
+	});
 });
 
 // Login Endpoint
