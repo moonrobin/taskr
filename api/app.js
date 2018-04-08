@@ -196,25 +196,26 @@ app.post('/bid/:task/:bid/', function(req, res){
 });
 
 // createtask endpoint
-app.post('/createtask/:title/:acceptbid/:taskendtime', function(req, res){
+app.post('/createtask/:title/:startbid/:taskendtime/:user', function(req, res){
   values = [
-    req.params.acceptbid,
+    req.params.startbid,
+    req.query.acceptbid || '0',
     req.query.accepttime,
     req.params.taskendtime,
     req.params.title,
     req.query.description,
-    req.session.user
+    req.params.user
   ];
   if (req.query.taskstarttime) {
     values.push(req.query.taskstarttime);
   }
   // RL:Two queries are a workaround for sanitization 
   var queryText = req.query.taskstarttime ? `
-  INSERT INTO tasks (acceptBid, acceptTime, taskEndTime, title, description, requester, taskstartTime) 
-  VALUES ($1, $2, $3, $4, $5, $6, $7)`:
+  INSERT INTO tasks (startBid, acceptBid, acceptTime, taskEndTime, title, description, requester, taskstartTime) 
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`:
   `
-  INSERT INTO tasks (acceptBid, acceptTime, taskEndTime, title, description, requester) 
-  VALUES ($1, $2, $3, $4, $5, $6)
+  INSERT INTO tasks (startBid, acceptBid, acceptTime, taskEndTime, title, description, requester) 
+  VALUES ($1, $2, $3, $4, $5, $6, $7)
   `;
   console.log(queryText)
   client.query(queryText, values, (err, result) => {
@@ -222,7 +223,7 @@ app.post('/createtask/:title/:acceptbid/:taskendtime', function(req, res){
       console.log(err.stack);
       res.sendStatus(400);
     } else {
-      console.log(`${req.session.user} has created task: ${req.query.title} with startbid $${req.query.acceptbid}`);
+      console.log(`${req.params.user} has created task: ${req.params.title} with startbid $${req.params.startbid}`);
       res.sendStatus(200);
     }
   });
