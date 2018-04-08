@@ -196,7 +196,7 @@ app.post('/bid/:task/:bid/', function(req, res){
 });
 
 // createtask endpoint
-app.post('/createtask/:title/:startbid/:taskendtime/:user', function(req, res){
+app.post('/createtask/:title/:startbid/:taskendtime', function(req, res){
   values = [
     req.params.startbid,
     req.query.acceptbid || '0',
@@ -204,7 +204,7 @@ app.post('/createtask/:title/:startbid/:taskendtime/:user', function(req, res){
     req.params.taskendtime,
     req.params.title,
     req.query.description,
-    req.params.user
+    req.session.user
   ];
   if (req.query.taskstarttime) {
     values.push(req.query.taskstarttime);
@@ -223,7 +223,7 @@ app.post('/createtask/:title/:startbid/:taskendtime/:user', function(req, res){
       console.log(err.stack);
       res.sendStatus(400);
     } else {
-      console.log(`${req.params.user} has created task: ${req.params.title} with startbid $${req.params.startbid}`);
+      console.log(`${req.session.user} has created task: ${req.params.title} with startbid $${req.params.startbid}`);
       res.sendStatus(200);
     }
   });
