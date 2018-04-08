@@ -28,12 +28,10 @@ class TaskListPage extends React.Component{
                           requester="Requester"
                           taskstarttime="Start Time"
                           taskendtime="End Time"
-                          currentbid="Current Bid"/>
+                          currentbid="Current Bid"
+                          details="Details"/>
         </div>;
-    console.log( rows );
-    rows = rows.length ? rows : <TaskRow empty="True"/>
-    console.log( rows );
-
+    rows = rows.length ? rows : <TaskRow empty="True" ondelete={this.renderList}/>
     return(
       <div id='task-listing'>
         {header}

@@ -13,6 +13,32 @@ class MyTasksPage extends TaskListPage{
     this.querySubmit();
   }
 
+  renderList() {
+    var rows = [];
+    rows.push();
+    for (var key in this.state.data ) {
+      var row = <TaskRow {...this.state.data[key]} type="update"/>;
+      rows.push(row);
+    }
+
+    var header = 
+        <div id='task-listing-header'>
+          <TaskRow header title="Task"
+                          requester="Requester"
+                          taskstarttime="Start Time"
+                          taskendtime="End Time"
+                          currentbid="Current Bid"
+                          details=""/>
+        </div>;
+    rows = rows.length ? rows : <TaskRow empty="True"/>
+    return(
+      <div id='task-listing'>
+        {header}
+        {rows}
+      </div>
+    );
+  }
+
   querySubmit( e ){
     if (e){
       e.preventDefault();

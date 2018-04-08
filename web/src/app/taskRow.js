@@ -6,14 +6,38 @@ class TaskRow extends React.Component {
   constructor(props) {
     super(props);
     this.popup = this.popup.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   popup() {
-    var url = `/task/${this.props.id}`
+    var url;
+    if (this.props.type === "update"){
+      url = `/update/${this.props.id}`
+    } else {
+      url = `/task/${this.props.id}`
+    }
     window.open( url, '_blank');
   }
 
+  delete(){
+    var taskId = this.props.id;
+    var deleteApiUrl = `http://localhost:3000/deletetask/${taskId}`;
+
+    fetch( deleteApiUrl, { method: 'DELETE', credentials:'include'})
+    .then( function(res){
+      if( res.ok){
+        alert('Task deleted!');
+        this.forceUpdate();
+      }
+    })
+  }
+
   render() {
+    var deleteButton;
+    if (this.props.type === "update"){
+      deleteButton = <button id="delete-button" type="button" onClick={this.delete}>Delete</button>;
+    }
+
     if(this.props.header) {
       return(
         <div>
@@ -44,7 +68,7 @@ class TaskRow extends React.Component {
           </div>
           <div id='item-box'>
             <div id='details'>
-              Details
+              {this.props.details}
             </div>
           </div>
         </div>
@@ -85,7 +109,8 @@ class TaskRow extends React.Component {
           </div>
         </div>
         <div id='item-box'>
-          <button id="details-button" type="button" onClick={this.popup}>Details</button>
+          <button id="details-button" type="button" onClick={this.popup}>{this.props.type ? 'Edit': 'Details' }</button>
+          {deleteButton}
         </div>
       </div>
     );
