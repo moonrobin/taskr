@@ -37,7 +37,9 @@ class NewTaskPage extends React.Component{
     fetch( api_url, { method: 'POST', credentials:'include'})
     .then(function(res){
       if (res.ok){
-        console.log('task created successfully');
+        alert('Task created!');
+      } else {
+        alert('You must complete all required fields');
       }
     })
   }
