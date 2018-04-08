@@ -25,8 +25,11 @@ CREATE TABLE tasks
   title VARCHAR(100) NOT NULL,
   description VARCHAR(999),
   requester VARCHAR(100) NOT NULL,
+  awardedTo VARCHAR(100),
   state STATE DEFAULT 'bidding' NOT NULL,--states are 'bidding', 'unfulfilled', 'awarded', 'complete'
   FOREIGN KEY (requester) REFERENCES users(username)
+    ON DELETE CASCADE,
+  FOREIGN KEY (awardedTo) REFERENCES users(username)
     ON DELETE CASCADE,
   CHECK (startBid > currentBid),
   CHECK (currentBid >= acceptBid),
