@@ -3,6 +3,7 @@ var app = express();
 var cors = require('cors');
 var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session');
+var cron = require('node-cron');
 
 app.use(cors({credentials: true, origin: 'http://localhost:1234'}));
 app.use(cookieSession({
@@ -34,6 +35,24 @@ const client = new Client({
 client.connect();
 app.listen(3000);
 console.log('Now listening for requests on port 3000...');
+
+// cron schedules a task to check the database every minute to update tasks table
+cron.schedule('* * * * *', function(){
+	// Send a query that updates tasks with no bids to 'unfulfilled'
+	var unfulfilledQuery = `
+	UPDATE
+	`
+	
+	//Send a query that updates tasks with bids to 'awarded' and award to the bidder (most complicated)
+	var awardedQuery = `
+	
+	`
+	
+	//Send a query that sets 'awarded' tasks to 'completed' if they have passed their taskEndTime
+	var completedQuery = `
+	
+	`
+});
 
 // Login Endpoint
 app.get('/login/:username/:password', function(req, res){

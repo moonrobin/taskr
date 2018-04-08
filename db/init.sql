@@ -21,6 +21,7 @@ CREATE TABLE tasks
   title VARCHAR(100) NOT NULL,
   description VARCHAR(999) NOT NULL,
   requester VARCHAR(100) NOT NULL,
+  taskStatus VARCHAR(100) DEFAULT 'bidding' NOT NULL, --states are 'bidding', 'unfulfilled', 'awarded', 'complete'
   FOREIGN KEY (requester) REFERENCES users(username)
     ON DELETE CASCADE
 );
