@@ -4,56 +4,38 @@ import history from './history';
 
 import TaskRow from './taskRow.js';
 import './css/tasklistpages.css';
-import mockData from './mockdata/data.js';
+import TaskListPage from './taskListPage.js';
 
-class MyTasksPage extends React.Component{
+class MyTasksPage extends TaskListPage{
   constructor(props) {
     super(props);
-    this.state = {
-      data: null
-    };
     this.querySubmit = this.querySubmit.bind(this);
+    this.querySubmit();
   }
 
-  querySubmit() {
-    this.setState({data: mockData});
-  }
-
-  renderList() {
-    var rows = [];
-    rows.push();
-    for (var key in mockData) {
-      var row = <TaskRow {...mockData[key]}/>;
-      rows.push(row);
+  querySubmit( e ){
+    if (e){
+      e.preventDefault();
     }
-    return(
-      <div id='task-listing'>
-        <div id='task-listing-header'>
-          <TaskRow header name="Task" desc="Description" requestorId="Requestor" currentBid="Current Bid"/>
-        </div>
-        {rows}
-      </div>
-    );
+    var api_url = `http://localhost:3000/`+
+    `tasks?requester=me`; // server side will determine user from cookies
+    var data; 
+    var that = this;
+    fetch( api_url, { method: 'GET', credentials:'include'})
+    .then(function(res){
+        return res.json();
+    }).then( function(resjson){
+        data = resjson;
+        that.setState({
+          data: data
+        });
+    });
   }
 
   render() {
     return(
       <div>
         <h3>My Requested Tasks</h3>
-        <div>
-          <form id="query">
-              <input type="text" placeholder="Search tasks..."/>
-              <div id="timefield">
-                <label>Start time</label><br/>
-                <input id="start" type="datetime-local" />
-              </div>
-              <div id="timefield">
-                <label>End time</label><br/>
-                <input id="end" type="datetime-local" />
-              </div>
-              <button id="submit" type="button" value="Search" onClick={this.querySubmit}>Search</button>
-          </form>
-        </div>
         {this.state.data && this.renderList()}
       </div>
     );

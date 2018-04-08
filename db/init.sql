@@ -1,10 +1,13 @@
 DROP TABLE IF EXISTS users, tasks, bids;
 
+CREATE TYPE STATE AS ENUM ('bidding','awarded', 'unfulfilled', 'complete');
+
 CREATE TABLE users
 (
   username VARCHAR(100) PRIMARY KEY,
   password VARCHAR(32) NOT NULL,
-  name VARCHAR(100) NOT NULL
+  name VARCHAR(100) NOT NULL,
+  admin boolean DEFAULT FALSE NOT NULL
 );
 
 CREATE UNIQUE INDEX upper_index
@@ -12,27 +15,33 @@ CREATE UNIQUE INDEX upper_index
 
 CREATE TABLE tasks
 (
-  id SERIAL PRIMARY KEY,
-  currentBid REAL,
-  acceptBid REAL DEFAULT 0,
-  acceptTime TIMESTAMP,
-  taskStartTime TIMESTAMP DEFAULT '-infinity',
-  taskEndTime TIMESTAMP DEFAULT 'infinity' NOT NULL,
+  id SERIAL PRIMARY KEY, -- Auto incrementing unique ID for each task
+  startBid REAL NOT NULL, -- Price which bidding starts
+  currentBid REAL, -- Current lowest bid on task (Null indicates no bid was placed)
+  acceptBid REAL DEFAULT 0 NOT NULL, -- If the bid drops to this price, then the task is auto awarded
+  acceptTime TIMESTAMP, -- Optional time to end the bid
+  taskStartTime TIMESTAMP DEFAULT '-infinity' NOT NULL,
+  taskEndTime TIMESTAMP NOT NULL,
   title VARCHAR(100) NOT NULL,
-  description VARCHAR(999) NOT NULL,
+  description VARCHAR(999),
   requester VARCHAR(100) NOT NULL,
-  taskStatus VARCHAR(100) DEFAULT 'bidding' NOT NULL, --states are 'bidding', 'unfulfilled', 'awarded', 'complete'
+  state STATE DEFAULT 'bidding' NOT NULL,--states are 'bidding', 'unfulfilled', 'awarded', 'complete'
   FOREIGN KEY (requester) REFERENCES users(username)
-    ON DELETE CASCADE
+    ON DELETE CASCADE,
+  CHECK (startBid > currentBid),
+  CHECK (currentBid >= acceptBid),
+  CHECK (acceptTime <= taskEndTime),
+  CHECK (taskEndTime > taskStartTime)
 );
 
 CREATE TABLE bids
 (
-  bid REAL,
-  task_id SERIAL PRIMARY KEY,
+  bid REAL NOT NULL,
+  task_id SERIAL,
   username VARCHAR(100),
   FOREIGN KEY (task_id) REFERENCES tasks(id)
     ON DELETE CASCADE,
   FOREIGN KEY (username) REFERENCES users(username)
-    ON DELETE CASCADE
+    ON DELETE CASCADE,
+  PRIMARY KEY (task_id, username)
 );

@@ -4,36 +4,36 @@ import history from './history';
 
 import TaskRow from './taskRow.js';
 import './css/tasklistpages.css';
-import mockData from './mockdata/data.js';
+import TaskListPage from './taskListPage.js';
 
-class TaskSearchPage extends React.Component{
+class TaskSearchPage extends TaskListPage{
   constructor(props) {
     super(props);
-    this.state = {
-      data: null
-    };
     this.querySubmit = this.querySubmit.bind(this);
   }
 
-  querySubmit() {
-    this.setState({data: mockData});
-  }
+  querySubmit(e){
+    e.preventDefault();
+    var title = this.refs.querytitle.value;
+    var startTime = this.refs.starttime.value;
+    var endTime = this.refs.endtime.value;
 
-  renderList() {
-    var rows = [];
-    rows.push();
-    for (var key in mockData) {
-      var row = <TaskRow {...mockData[key]}/>;
-      rows.push(row);
-    }
-    return(
-      <div id='task-listing'>
-        <div id='task-listing-header'>
-          <TaskRow header name="Task" desc="Description" requestorId="Requestor" currentBid="Current Bid"/>
-        </div>
-        {rows}
-      </div>
-    );
+    var api_url = `http://localhost:3000/`+
+    `tasks?taskstarttime=${startTime}`+
+    `&taskendtime=${endTime}&titlequery=${title}`;
+
+    var data; 
+    var that = this;
+    fetch( api_url, { method: 'GET', credentials:'include'})
+    .then(function(res){
+        return res.json();
+    }).then( function(resjson){
+        data = resjson;
+        console.log( data );
+        that.setState({
+          data: data
+        });
+    });
   }
 
   render() {
@@ -41,15 +41,15 @@ class TaskSearchPage extends React.Component{
       <div>
         <h3>Search Tasks</h3>
         <div>
-          <form id="query">
-              <input type="text" placeholder="Search tasks..."/>
+          <form id="query" onSubmit={this.querySubmit}>
+              <input type="text" ref="querytitle" placeholder="Search tasks..."/>
               <div id="timefield">
                 <label>Start time</label><br/>
-                <input id="start" type="datetime-local" />
+                <input id="start" ref="starttime" type="datetime-local" />
               </div>
               <div id="timefield">
                 <label>End time</label><br/>
-                <input id="end" type="datetime-local" />
+                <input id="end" ref = "endtime"type="datetime-local" />
               </div>
               <button id="submit" type="button" onClick={this.querySubmit}>Search</button>
           </form>

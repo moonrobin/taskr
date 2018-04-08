@@ -21,6 +21,18 @@
 #requestor-id {
     width: 80px;
     padding-left: 5px;
+    padding-right: 5px;
+}
+#start-time {
+    width: 250px;
+}
+
+#end-time {
+    width: 250px;
+}
+
+#accept-bid {
+    width: 100px;
 }
 
 #current-bid {
