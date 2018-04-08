@@ -27,7 +27,6 @@ class TaskRow extends React.Component {
     .then( function(res){
       if( res.ok){
         alert('Task deleted!');
-        this.forceUpdate();
       }
     })
   }

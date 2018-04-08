@@ -34,7 +34,7 @@ class TaskListPage extends React.Component{
                           accepttime="Bidding Ends"
                           details="Details"/>
         </div>;
-    rows = rows.length ? rows : <TaskRow empty="True" ondelete={this.renderList}/>
+    rows = rows.length ? rows : <TaskRow empty="True" />
     return(
       <div id='task-listing'>
         {header}
