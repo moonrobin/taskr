@@ -1,6 +1,8 @@
 # Taskr
 Task management website project for CS2102
 
+[Project Report Link](https://docs.google.com/document/d/1stjGh6VYDWWQEcp_RZvMghdJLj3kcH2gGHhGnCSc8KA/edit?usp=sharing)
+
 Quick Start
 ----
 * You'll need to download and install the following:
