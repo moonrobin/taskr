@@ -1,10 +1,13 @@
 DROP TABLE IF EXISTS users, tasks, bids;
 
+CREATE TYPE STATE AS ENUM ('bidding','awarded', 'unfulfilled', 'complete');
+
 CREATE TABLE users
 (
   username VARCHAR(100) PRIMARY KEY,
   password VARCHAR(32) NOT NULL,
-  name VARCHAR(100) NOT NULL
+  name VARCHAR(100) NOT NULL,
+  admin boolean DEFAULT FALSE NOT NULL
 );
 
 CREATE UNIQUE INDEX upper_index
@@ -22,6 +25,7 @@ CREATE TABLE tasks
   title VARCHAR(100) NOT NULL,
   description VARCHAR(999),
   requester VARCHAR(100) NOT NULL,
+  state STATE DEFAULT 'bidding',
   FOREIGN KEY (requester) REFERENCES users(username)
     ON DELETE CASCADE,
   CHECK (startBid > currentBid),

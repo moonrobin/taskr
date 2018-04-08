@@ -299,6 +299,7 @@ insert into users (username, name, password) values ('cnorquay87', 'Cesare Norqu
 insert into users (username, name, password) values ('shinckley88', 'Stillmann Hinckley', MD5('VVQLjV7pioa3'));
 insert into users (username, name, password) values ('idamiral89', 'Iorgo Damiral', MD5('hJVIrjiN'));
 insert into users (username, name, password) values ('cgeorgi8a', 'Claudetta Georgi', MD5('zMpyuvB6F'));
+insert into users (username, name, password, admin) values ('admin', 'admin', MD5('123123'), TRUE);
 END;
 
 -- tasks
