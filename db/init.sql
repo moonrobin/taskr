@@ -58,8 +58,6 @@ DROP FUNCTION IF EXISTS check_task_award_validity();
 CREATE OR REPLACE FUNCTION check_task_award_validity() RETURNS TRIGGER AS $func2$
 BEGIN
   IF NEW.state = 'awarded' AND NEW.taskstarttime <> '-infinity' THEN
-    --WITH overlappingTimeTable AS
-    --(SELECT * FROM tasks where awardedTo = NEW.awardedTo AND id <> NEW.id AND taskStartTime <> '-infinity' AND (NEW.taskStartTime, NEW.taskEndTime) OVERLAPS (taskStartTime, taskEndTime))
     UPDATE tasks
     SET state = 'unfulfilled', awardedTo = NULL
     WHERE id = NEW.id AND EXISTS (SELECT * FROM tasks AS t2 WHERE t2.awardedTo = NEW.awardedTo AND t2.id <> NEW.id AND t2.taskStartTime <> '-infinity' AND (taskStartTime, taskEndTime) OVERLAPS (t2.taskStartTime, t2.taskEndTime));
