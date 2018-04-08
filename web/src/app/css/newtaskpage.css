@@ -1,0 +1,38 @@
+h3{
+	padding-left:10px;
+
+}
+
+#taskfieldname{
+	padding: 5px 0px 5px 0px;
+}
+
+#submitbutton{
+	padding-top: 20px;
+}
+
+#taskfieldvalue input{
+	width: 300px;
+}
+
+#timefield input{
+	width: 300px;
+	flex-basis: 0;
+	flex-grow: 7;
+	padding-right:10px;
+	padding-left:10px;
+}
+
+#taskfieldvalue textarea{
+	width: 300px;
+	height: 150px;
+    flex-basis: 0;
+    flex-grow: 7;
+    padding: 10px;
+    font-family: arial;
+
+}
+
+#query{
+	margin: 10px 10px 10px 10px;
+}
