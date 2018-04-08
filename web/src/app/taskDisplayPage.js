@@ -21,8 +21,10 @@ class TaskDisplayPage extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      data: null
+      data: null,
+      taskId: null
     };
+    this.queryTask = this.queryTask.bind(this);
     this.bidTask = this.bidTask.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
     this.queryTask();
@@ -45,17 +47,30 @@ class TaskDisplayPage extends React.Component{
         return res.json();
     }).then( function(resjson){
         data = resjson;
-        console.log( data );
         that.setState({
-          data: data[0]
+          data: data[0],
+          taskId: taskId
         });
     });   
 
   }
 
   bidTask() {
-    var createBidApiUrl = `http://localhost:3000`;
+    var bid = this.refs.bidproposal.value;
 
+    var createBidApiUrl = `http://localhost:3000/bid/${this.state.taskId}/${bid}/`;
+
+    var that = this;
+
+    fetch( createBidApiUrl, { method: 'POST', credentials:'include'})
+    .then(function(res){
+        if( res.ok ){
+          alert('Bid placed succesfully');
+          that.queryTask();
+        } else {
+          alert('Invalid Bid: bid must be lower than current bid and on a currently valid task');
+        }
+    })
   }
 
   deleteTask() {
@@ -84,6 +99,9 @@ class TaskDisplayPage extends React.Component{
       <div>
         <h3>Task Details</h3>
         {rows}
+        <div id="taskfieldvalue" style={{display:'inline-block'}}>
+          <input type="number" min="0" ref="bidproposal" placeholder="Place a bid..."/>
+        </div>
         <button id="bid-button" type="button" onClick={this.bidTask}>Bid</button>
         <button id="delete-button" type="button" onClick={this.deleteTask}>Delete</button>
       </div>

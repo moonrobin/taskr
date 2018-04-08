@@ -26,7 +26,7 @@ CREATE TABLE tasks
   description VARCHAR(999),
   requester VARCHAR(100) NOT NULL,
   awardedTo VARCHAR(100),
-  state STATE DEFAULT 'bidding',
+  state STATE DEFAULT 'bidding' NOT NULL,
   FOREIGN KEY (requester) REFERENCES users(username)
     ON DELETE CASCADE,
   FOREIGN KEY (awardedTo) REFERENCES users(username)
@@ -48,3 +48,25 @@ CREATE TABLE bids
     ON DELETE CASCADE,
   PRIMARY KEY (task_id, username)
 );
+
+-- Trigger for checking the validity of task awarding.
+-- When the best bid is awarded to a user who has already
+-- accepted a task with an overlapping time, invalidate the task (set it to unfulfilled)
+
+DROP FUNCTION IF EXISTS check_task_award_validity();
+
+CREATE OR REPLACE FUNCTION check_task_award_validity() RETURNS TRIGGER AS $func2$
+BEGIN
+  IF NEW.state = 'awarded' AND NEW.taskstarttime <> '-infinity' THEN
+    UPDATE tasks
+    SET state = 'unfulfilled', awardedTo = NULL
+    WHERE id = NEW.id AND EXISTS (SELECT * FROM tasks AS t2 WHERE t2.awardedTo = NEW.awardedTo AND t2.id <> NEW.id AND t2.taskStartTime <> '-infinity' AND (taskStartTime, taskEndTime) OVERLAPS (t2.taskStartTime, t2.taskEndTime));
+  END IF;
+  RETURN NEW;
+END;
+$func2$ LANGUAGE plpgsql;
+
+CREATE TRIGGER task_awarded_trigger
+  AFTER UPDATE ON tasks
+  FOR EACH ROW
+  EXECUTE PROCEDURE update_tasks_table_on_delete();
