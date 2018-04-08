@@ -12,6 +12,7 @@ var TaskDisplayPage = require('./taskDisplayPage');
 var MyTasksPage = require('./myTasksPage');
 var MyBidsPage = require('./myBidsPage');
 var NewTaskPage = require('./newTaskPage');
+var UpdateTaskPage = require('.updateTaskPage');
 
 class App extends React.Component{
   render(){
@@ -23,6 +24,7 @@ class App extends React.Component{
          <Route exact path="/profile" component={MockProfile} />
          <Route exact path="/search" component={TaskSearchPage} />
          <Route exact path="/task/*" component={TaskDisplayPage} />
+         <Route exact path="/update/*" component={UpdateTaskPage} />
          <Route exact path="/newtask" component={NewTaskPage} />
          <Route exact path="/mytasks" component={MyTasksPage} />
          <Route exact path="/mybids" component={MyBidsPage} />
