@@ -13,6 +13,10 @@ h3{
 
 #taskfieldvalue input{
 	width: 300px;
+    flex-basis: 0;
+    flex-grow: 7;
+    padding: 10px;
+    font-family: arial;
 }
 
 #timefield input{
@@ -23,9 +27,18 @@ h3{
 	padding-left:10px;
 }
 
+#timefield input{
+	width: 300px;
+	flex-basis: 0;
+	flex-grow: 7;
+	padding-right:10px;
+	padding-left:10px;
+}
+
+
 #taskfieldvalue textarea{
 	width: 300px;
-	height: 150px;
+	height: 100px;
     flex-basis: 0;
     flex-grow: 7;
     padding: 10px;

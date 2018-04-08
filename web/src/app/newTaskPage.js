@@ -11,17 +11,26 @@ class NewTaskPage extends React.Component{
 
   querySubmit(e){
     e.preventDefault();
-    var title = this.refs.querytitle.value;
+    var title = this.refs.tasktitle.value;
     var desc = this.refs.desc.value;
-    var acceptbid = this.refs.acceptbid;
-    var startingbid = this.refs.startingbid;
-    var startTime = this.refs.starttime.value;
-    var endTime = this.refs.endtime.value;
+    var acceptbid = this.refs.acceptbid.value;
+    var startingbid = this.refs.startingbid.value;
+    var starttime = this.refs.starttime.value;
+    var accepttime = this.refs.accepttime.value;
+    var endtime = this.refs.endtime.value;
 
     // use new task api
     var api_url = `http://localhost:3000/`+
-    `createtask/${title}/${acceptbid}/${endtime}`+
-    `&accepttime=${starttime}&description=${desc}`;
+    `createtask/${title}/${startingbid}/${endtime}?`;
+    if ( accepttime ){
+      api_url +=  `&accepttime=${accepttime}`;
+    }
+    if ( desc ){
+      api_url += `&description=${desc}`;``
+    }
+    if ( starttime ){
+      api_url += `&starttime=${starttime}`;
+    }
 
     var data; 
     var that = this;
@@ -39,17 +48,17 @@ class NewTaskPage extends React.Component{
         <h3>New Task</h3>
         <div>
           <form id="query" onSubmit={this.querySubmit}>
-              <div id="taskfieldname">Task Title</div>
+              <div id="taskfieldname">Task Title (required)</div>
               <div id="taskfieldvalue"> 
                 <input type="text" ref="tasktitle" placeholder="Briefly describe the task"/>
               </div>
-              <div id="taskfieldname">Accept Bid (required)</div>
+              <div id="taskfieldname">Accept Bid </div>
               <div id="taskfieldvalue"> 
-                <input type="text" ref="acceptbid" placeholder="Name an accept bid price"/>
+                <input type="number" min="0" ref="acceptbid" placeholder="Name an accept bid price"/>
               </div>
               <div id="taskfieldname">Starting Bid (required)</div>
               <div id="taskfieldvalue"> 
-                <input type="text" ref="startingbid" placeholder="Name a starting bid price"/>
+                <input type="number" min="0" ref="startingbid" placeholder="Name a starting bid price"/>
               </div>
               <div id="taskfieldname">Task Description</div>
               <div id="taskfieldvalue"> 
@@ -65,6 +74,12 @@ class NewTaskPage extends React.Component{
                 <div id="timefield">
                   <div id="taskfieldname">End Time (required)</div>
                   <input id="end" ref = "endtime"type="datetime-local" />
+                </div>
+              </div>
+              <div id="taskfieldvalue"> 
+                <div id="timefield">
+                  <div id="taskfieldname">Finish bidding at:</div>
+                  <input id="accept" ref="accepttime" type="datetime-local" />
                 </div>
               </div>
               <div id="submitbutton">
