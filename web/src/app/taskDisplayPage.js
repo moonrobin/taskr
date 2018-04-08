@@ -10,6 +10,7 @@ var d = {
   "title":  "Title",
   "description":  "Description",
   "requestor":  "Requestor",
+  "startbid": "Starting Bid",
   "currentbid": "Current Bid",
   "acceptbid": "Accept Bid",
   "accepttime": "Accept Time",
@@ -47,6 +48,7 @@ class TaskDisplayPage extends React.Component{
         return res.json();
     }).then( function(resjson){
         data = resjson;
+        console.log( JSON.stringify(data[0]));
         that.setState({
           data: data[0],
           taskId: taskId
@@ -80,7 +82,7 @@ class TaskDisplayPage extends React.Component{
   render() {
     var rows = [];
     for(var key in this.state.data) {
-      if(key != "id" && mockData[key] != null) {
+      if(key != "id" && this.state.data[key] != null) {
         var row = <DetailItem attr={d[key]} value={this.state.data[key]}/>;
         rows.push(row);
       }

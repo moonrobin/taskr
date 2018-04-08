@@ -8,6 +8,8 @@
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
+    margin-right: 5px;
+    margin-left: 5px;
 }
 
 #name {
@@ -24,19 +26,30 @@
     padding-right: 5px;
 }
 #start-time {
-    width: 250px;
+    width: 100px;
+    overflow: hidden;
 }
 
 #end-time {
-    width: 250px;
+    width: 100px;
+    overflow: hidden;
+}
+
+#accept-time {
+    width: 100px;
+    overflow: hidden;
+}
+
+#starting-bid {
+    width: 90px;
 }
 
 #accept-bid {
-    width: 100px;
 }
 
 #current-bid {
-    width: 100px;
+    text-align:left;
+    width: 90px;
 }
 
 #details {

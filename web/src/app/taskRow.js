@@ -62,6 +62,21 @@ class TaskRow extends React.Component {
             </div>
           </div>
           <div id='item-box'>
+            <div id='accept-time'>
+              {this.props.accepttime}
+            </div>
+          </div>
+          <div id='item-box'>
+            <div id='starting-bid'>
+              {this.props.startbid}
+            </div>
+          </div>
+          <div id='item-box'>
+            <div id='accept-bid'>
+              {this.props.acceptbid}
+            </div>
+          </div>
+          <div id='item-box'>
             <div id='current-bid'>
               {this.props.currentbid}
             </div>
@@ -84,25 +99,45 @@ class TaskRow extends React.Component {
     return(
       <div id='row'>
         <div id='item-box'>
-          <div id='name'>
-            {this.props.title}
+            <div id='name'>
+              {this.props.title}
+            </div>
           </div>
-        </div>
-        <div id='item-box'>
-          <div id='requestor-id'>
-            {this.props.requester}
+          <div id='item-box'>
+            <div id='requestor-id'>
+              {this.props.requester}
+            </div>
           </div>
-        </div>
-        <div id='item-box'>
-          <div id='start-time'>
-            {this.props.taskstarttime}
+          <div id='item-box'>
+            <div id='start-time'>
+              {this.props.taskstarttime}
+            </div>
           </div>
-        </div>
-        <div id='item-box'>
-          <div id='end-time'>
-            {this.props.taskendtime}
+          <div id='item-box'>
+            <div id='end-time'>
+              {this.props.taskendtime}
+            </div>
           </div>
-        </div>
+          <div id='item-box'>
+            <div id='accept-time'>
+              {this.props.accepttime}
+            </div>
+          </div>
+          <div id='item-box'>
+            <div id='starting-bid'>
+              {this.props.startbid == null ? "None" : `$${this.props.startbid}`}
+            </div>
+          </div>
+          <div id='item-box'>
+            <div id='accept-bid'>
+              {this.props.acceptbid == null ? "None" : `$${this.props.acceptbid}`}
+            </div>
+          </div>
+          <div id='item-box'>
+            <div id='details'>
+              {this.props.details}
+            </div>
+          </div>
         <div id='item-box'>
           <div id='current-bid'>
             {this.props.currentbid == null ? "No Bids" : `$${this.props.currentbid}`}

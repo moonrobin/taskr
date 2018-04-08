@@ -26,9 +26,12 @@ class TaskListPage extends React.Component{
         <div id='task-listing-header'>
           <TaskRow header title="Task"
                           requester="Requester"
+                          acceptbid="Accept Bid"
+                          startbid="Starting Bid"
+                          currentbid="Current Bid"
                           taskstarttime="Start Time"
                           taskendtime="End Time"
-                          currentbid="Current Bid"
+                          accepttime="Bidding Ends"
                           details="Details"/>
         </div>;
     rows = rows.length ? rows : <TaskRow empty="True" ondelete={this.renderList}/>
