@@ -154,8 +154,10 @@ app.post('/bid/:task/:bid/', function(req, res){
   var validationQuery = `
   SELECT 1
   FROM tasks
-  WHERE id = $1 AND currentbid != NULL AND currentbid < $2
+  WHERE id = $1 AND currentbid IS NOT NULL AND currentbid < $2
   `;
+
+
   client.query(validationQuery, validationValues, (err, result) => {
     if (err || result.rows[0]) { // if we get anything back from this, then this bid isn't valid
       console.log('Bid must be lower than current bid');
