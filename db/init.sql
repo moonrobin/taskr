@@ -1,7 +1,9 @@
 DROP TABLE IF EXISTS users, tasks, bids;
 DROP TYPE IF EXISTS STATE;
-DROP FUNCTION IF EXISTS check_task_award_validity();
-DROP TRIGGER IF EXISTS task_awarded_trigger ON tasks;
+DROP FUNCTION IF EXISTS tasks_table_updated_trigger_function();
+DROP FUNCTION IF EXISTS tasks_table_created_trigger_function();
+DROP TRIGGER IF EXISTS tasks_table_updated_trigger ON tasks;
+DROP TRIGGER IF EXISTS tasks_table_created_trigger ON tasks;
 
 CREATE TYPE STATE AS ENUM ('bidding','awarded', 'unfulfilled', 'complete');
 
@@ -55,8 +57,14 @@ CREATE TABLE bids
 -- Function for checking the validity of task awarding.
 -- When the best bid is awarded to a user who has already
 -- accepted a task with an overlapping time, invalidate the task (set it to unfulfilled)
-CREATE OR REPLACE FUNCTION check_task_award_validity() RETURNS TRIGGER AS $func2$
+CREATE OR REPLACE FUNCTION tasks_table_updated_trigger_function() RETURNS TRIGGER AS $func2$
 BEGIN
+  IF NEW.currentBid <= NEW.acceptBid THEN
+    UPDATE tasks
+    SET state = 'awarded', awardedto = (SELECT username FROM bids WHERE task_id = id AND bid = currentBid LIMIT 1)
+    WHERE state = 'bidding' AND id = NEW.id;
+  END IF;
+  -- Check the validity of task if it has been awarded
   IF NEW.state = 'awarded' AND NEW.taskstarttime <> '-infinity' THEN
     UPDATE tasks
     SET state = 'unfulfilled', awardedTo = NULL
@@ -74,7 +82,34 @@ BEGIN
 END;
 $func2$ LANGUAGE plpgsql;
 
-CREATE TRIGGER task_awarded_trigger
+CREATE OR REPLACE FUNCTION tasks_table_created_trigger_function() RETURNS TRIGGER AS $func2$
+BEGIN
+  -- Check that the dates are all valid
+  IF NEW.taskEndTime < LOCALTIMESTAMP(0) THEN
+    RAISE EXCEPTION 'taskEndTime cannot be before the current time';
+  END IF;
+  IF NEW.acceptTime IS NOT NULL THEN
+    IF NEW.acceptTime < LOCALTIMESTAMP(0) THEN
+      RAISE EXCEPTION 'acceptTime cannot be before the current time';
+    END IF;
+  END IF;
+  -- Task Start Time is default -infinity, we only check it if it's not -infinity
+  IF (NEW.taskStartTime <> '-infinity') THEN
+    -- Check the task start time (that it is after the current time, and before the task end time
+    IF (NEW.taskStartTime < LOCALTIMESTAMP(0) OR NEW.taskStartTime > NEW.taskEndTime) THEN
+      RAISE EXCEPTION 'taskStartTime is invalid.';
+    END IF;
+  END IF;
+  RETURN NEW;
+END;
+$func2$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tasks_table_updated_trigger
   AFTER UPDATE ON tasks
   FOR EACH ROW
-  EXECUTE PROCEDURE check_task_award_validity();
+  EXECUTE PROCEDURE tasks_table_updated_trigger_function();
+
+CREATE TRIGGER tasks_table_created_trigger
+  BEFORE INSERT ON tasks
+  FOR EACH ROW
+  EXECUTE PROCEDURE tasks_table_created_trigger_function();
