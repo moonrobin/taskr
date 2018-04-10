@@ -92,7 +92,7 @@ class TaskDisplayPage extends React.Component{
       return(
         <div>
           <h3>Task Details</h3>
-          <p> Task not found </p>
+          <p>Task not found</p>
         </div>
       );
     }

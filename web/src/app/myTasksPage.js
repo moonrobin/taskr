@@ -2,9 +2,10 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import history from './history';
 
+import MenuBar from './menuBar.js';
+import TaskListPage from './taskListPage.js';
 import TaskRow from './taskRow.js';
 import './css/tasklistpages.css';
-import TaskListPage from './taskListPage.js';
 
 class MyTasksPage extends TaskListPage{
   constructor(props) {
@@ -23,17 +24,18 @@ class MyTasksPage extends TaskListPage{
 
     var header = 
         <div id='task-listing-header'>
-          <TaskRow header title="Task"
-                          requester="Requester"
-                          acceptbid="Accept Bid"
-                          startbid="Starting Bid"
-                          currentbid="Current Bid"
-                          taskstarttime="Start Time"
-                          taskendtime="End Time"
-                          accepttime="Bidding Ends"
-                          details="Details"/>
+          <TaskRow header
+              title="Task"
+              requester="Requester"
+              acceptbid="Accept Bid"
+              startbid="Starting Bid"
+              currentbid="Current Bid"
+              taskstarttime="Start Time"
+              taskendtime="End Time"
+              accepttime="Bidding Ends"
+              details="Details"/>
         </div>;
-    rows = rows.length ? rows : <TaskRow empty="True"/>
+    rows = rows.length ? rows : <TaskRow empty/>
     return(
       <div id='task-listing'>
         {header}
@@ -64,6 +66,7 @@ class MyTasksPage extends TaskListPage{
   render() {
     return(
       <div>
+        <MenuBar/>
         <h3>My Requested Tasks</h3>
         {this.state.data && this.renderList()}
       </div>
