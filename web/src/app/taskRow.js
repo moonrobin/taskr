@@ -22,9 +22,11 @@ class TaskRow extends React.Component {
   delete(){
     var taskId = this.props.id;
     var deleteApiUrl = `http://localhost:3000/deletetask/${taskId}`;
+    var that = this;
     fetch( deleteApiUrl, { method: 'DELETE', credentials:'include'}).then( function(res){
       if(res.ok){
         alert('Task deleted!');
+        that.props.onDelete( that.props.key );
       }
     });
   }
@@ -33,7 +35,7 @@ class TaskRow extends React.Component {
     return (
       <div id='item-box'>
         <div id='delete'>
-          <button id="delete-button" type="button" onClick={this.delete}>Delete</button>
+          <button id="delete-button" type="button" onClick={this.delete.bind(this)}>Delete</button>
         </div>
       </div>
     );

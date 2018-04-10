@@ -12,13 +12,27 @@ class TaskListPage extends React.Component{
       data: null
     };
     this.renderList = this.renderList.bind(this);
+    this.deleteRow = this.deleteRow.bind(this);
+  }
+
+  deleteRow( index ){
+    var rows = this.state.data;
+    rows.splice(index, 1);
+    this.setState({
+      data: rows
+    });
+
   }
 
   renderList() {
     var rows = [];
     rows.push();
     for (var key in this.state.data ) {
-      var row = <TaskRow {...this.state.data[key]}/>;
+      var row = <TaskRow {...this.state.data[key]} />;
+      row = React.cloneElement( row, {
+        key: key,
+        onDelete: this.deleteRow
+      });
       rows.push(row);
     }
 

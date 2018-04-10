@@ -11,6 +11,7 @@ class MyTasksPage extends TaskListPage{
   constructor(props) {
     super(props);
     this.querySubmit = this.querySubmit.bind(this);
+    this.renderList = this.renderList.bind(this);
     this.querySubmit();
   }
 
@@ -19,6 +20,10 @@ class MyTasksPage extends TaskListPage{
     rows.push();
     for (var key in this.state.data ) {
       var row = <TaskRow {...this.state.data[key]} type="update"/>;
+      row = React.cloneElement( row, {
+        key: key,
+        onDelete: this.deleteRow
+      });
       rows.push(row);
     }
 
