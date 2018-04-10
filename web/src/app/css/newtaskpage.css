@@ -1,6 +1,5 @@
 h3{
 	padding-left:10px;
-
 }
 
 #taskfieldname{
@@ -8,7 +7,7 @@ h3{
 }
 
 #submitbutton{
-	padding-top: 20px;
+	padding-top: 10px;
 }
 
 #taskfieldvalue input {
@@ -19,14 +18,13 @@ h3{
     font-family: arial;
 }
 
-#timefield input{
-	width: 500px;
+#time-field input{
+	width: 300px;
 	flex-basis: 0;
 	flex-grow: 7;
 	padding-right:10px;
 	padding-left:10px;
-}
-
+}	
 
 #taskfieldvalue textarea{
 	width: 500px;

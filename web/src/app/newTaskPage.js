@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import history from './history';
 
 import Autocomplete from 'react-autocomplete';
+import MenuBar from './menuBar.js';
 import './css/newtaskpage.css';
 
 var samples = {
@@ -19,7 +20,7 @@ class NewTaskPage extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      name: null
+      name: ''
     };
     this.querySubmit = this.querySubmit.bind(this);
   }
@@ -79,6 +80,7 @@ class NewTaskPage extends React.Component{
   render() {
     return(
       <div>
+        <MenuBar/>
         <h3>New Task</h3>
         <div>
           <form id="query" onSubmit={this.querySubmit}>
@@ -98,21 +100,21 @@ class NewTaskPage extends React.Component{
             <div id="taskfieldvalue"> 
               <textarea maxLength="500" name="descbox" ref="desc" id="taskdesc" placeholder="Describe the task"></textarea>
             </div>
+            <div id="taskfieldname">Start Time</div>
             <div id="taskfieldvalue"> 
-              <div id="timefield">
-                <div id="taskfieldname">Start Time</div>
+              <div id="time-field">
                 <input id="start" ref="starttime" type="datetime-local" />
               </div>
             </div>
+            <div id="taskfieldname">End Time (required)</div>
             <div id="taskfieldvalue"> 
-              <div id="timefield">
-                <div id="taskfieldname">End Time (required)</div>
+              <div id="time-field">
                 <input id="end" ref = "endtime"type="datetime-local" />
               </div>
             </div>
+            <div id="taskfieldname">Finish bidding at:</div>
             <div id="taskfieldvalue"> 
-              <div id="timefield">
-                <div id="taskfieldname">Finish bidding at:</div>
+              <div id="time-field">
                 <input id="accept" ref="accepttime" type="datetime-local" />
               </div>
             </div>

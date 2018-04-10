@@ -2,9 +2,10 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import history from './history';
 
+import MenuBar from './menuBar.js';
+import TaskListPage from './taskListPage.js';
 import TaskRow from './taskRow.js';
 import './css/tasklistpages.css';
-import TaskListPage from './taskListPage.js';
 
 class MyTasksPage extends TaskListPage{
   constructor(props) {
@@ -64,6 +65,7 @@ class MyTasksPage extends TaskListPage{
   render() {
     return(
       <div>
+        <MenuBar/>
         <h3>My Requested Tasks</h3>
         {this.state.data && this.renderList()}
       </div>

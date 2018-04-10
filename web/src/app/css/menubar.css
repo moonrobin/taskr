@@ -1,0 +1,12 @@
+#menu-bar-container {
+    padding: 5px 0px 5px 0px;
+    display: inline-block;
+    border-bottom: 2px solid #7f4cc1;
+    margin-bottom: 10px;
+}
+
+#menu-bar-item {
+    vertical-align: middle;
+    display: inline-block;
+    margin: 0px 15px 0px 15px;
+}
