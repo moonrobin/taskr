@@ -299,6 +299,7 @@ insert into users (username, name, password) values ('cnorquay87', 'Cesare Norqu
 insert into users (username, name, password) values ('shinckley88', 'Stillmann Hinckley', MD5('VVQLjV7pioa3'));
 insert into users (username, name, password) values ('idamiral89', 'Iorgo Damiral', MD5('hJVIrjiN'));
 insert into users (username, name, password) values ('cgeorgi8a', 'Claudetta Georgi', MD5('zMpyuvB6F'));
+insert into users (username, name, password) values ('bob', 'Bob Jones', MD5('123123'));
 insert into users (username, name, password, admin) values ('admin', 'admin', MD5('123123'), TRUE);
 END;
 
@@ -404,10 +405,30 @@ insert into tasks (startBid, acceptBid, acceptTime, taskStartTime, taskEndTime, 
 insert into tasks (startBid, acceptBid, acceptTime, taskStartTime, taskEndTime, title, description, requester) values (154, 68, '2018-04-10 06:53:57', '2018-05-12 10:17:30', '2018-06-24 14:38:26', 'Smell Teaching', 'Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.', 'mperrington2p');
 insert into tasks (startBid, acceptBid, acceptTime, taskStartTime, taskEndTime, title, description, requester) values (173, 6, null, DEFAULT, '2018-06-21 11:28:31', 'Warm Fact', 'Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.', 'hadenot2q');
 insert into tasks (startBid, acceptBid, acceptTime, taskStartTime, taskEndTime, title, description, requester) values (196, 17, null, DEFAULT, '2018-06-18 14:59:48', 'Pull Boundary', 'Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.', 'ygilffillan2r');
+insert into tasks (startBid, acceptBid, currentBid, state, acceptTime, taskStartTime, taskEndTime, title, description, requester, awardedto) values (196, 17, 50, 'complete', null, DEFAULT, '2018-04-01 14:59:48', 'Eat Salad', 'Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.', 'ygilffillan2r', 'bob');
+insert into tasks (startBid, acceptBid, currentBid, state, acceptTime, taskStartTime, taskEndTime, title, description, requester, awardedto) values (196, 17, 50, 'complete', null, DEFAULT, '2018-04-08 14:59:48', 'Consume Vegatables', 'Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.', 'ygilffillan2r', 'bob');
+insert into tasks (startBid, acceptBid, currentBid, state, acceptTime, taskStartTime, taskEndTime, title, description, requester, awardedto) values (196, 17, 50, 'complete', null, DEFAULT, '2018-04-02 14:59:48', 'Polish Screen', 'Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.', 'ygilffillan2r', 'bob');
+insert into tasks (startBid, acceptBid, currentBid, state, acceptTime, taskStartTime, taskEndTime, title, description, requester, awardedto) values (196, 17, 50, 'complete', null, DEFAULT, '2018-04-07 14:59:48', 'Help Study', 'Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.', 'ygilffillan2r', 'bob');
+insert into tasks (startBid, acceptBid, currentBid, state, acceptTime, taskStartTime, taskEndTime, title, description, requester, awardedto) values (196, 17, 50, 'complete', null, DEFAULT, '2018-04-01 14:59:48', 'Save World', 'Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.', 'ygilffillan2r', 'bob');
+insert into tasks (startBid, acceptBid, currentBid, state, acceptTime, taskStartTime, taskEndTime, title, description, requester, awardedto) values (196, 17, 50, 'complete', null, DEFAULT, '2018-04-05 14:59:48', 'Clean Computer', 'Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.', 'marrighetti2k', 'bob');
+insert into tasks (startBid, acceptBid, currentBid, state, acceptTime, taskStartTime, taskEndTime, title, description, requester, awardedto) values (196, 17, 50, 'complete', null, DEFAULT, '2018-04-04 14:59:48', 'Build Fence', 'Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.', 'marrighetti2k', 'bob');
+insert into tasks (startBid, acceptBid, currentBid, state, acceptTime, taskStartTime, taskEndTime, title, description, requester, awardedto) values (196, 17, 50, 'complete', null, DEFAULT, '2018-04-04 14:59:48', 'Brainstorm', 'Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.', 'marrighetti2k', 'bob');
+insert into tasks (startBid, acceptBid, currentBid, state, acceptTime, taskStartTime, taskEndTime, title, description, requester, awardedto) values (196, 17, 50, 'complete', null, DEFAULT, '2018-04-03 14:59:48', 'Move TV', 'Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.', 'marrighetti2k', 'bob');
+insert into tasks (startBid, acceptBid, currentBid, state, acceptTime, taskStartTime, taskEndTime, title, description, requester, awardedto) values (196, 17, 50, 'complete', null, DEFAULT, '2018-04-02 14:59:48', 'Sweep House', 'Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.', 'marrighetti2k', 'bob');
 END;
 
 -- bids
 BEGIN;
+insert into bids (bid, task_id, username) values (50, 101, 'bob');
+insert into bids (bid, task_id, username) values (50, 102, 'bob');
+insert into bids (bid, task_id, username) values (50, 103, 'bob');
+insert into bids (bid, task_id, username) values (50, 104, 'bob');
+insert into bids (bid, task_id, username) values (50, 105, 'bob');
+insert into bids (bid, task_id, username) values (50, 106, 'bob');
+insert into bids (bid, task_id, username) values (50, 107, 'bob');
+insert into bids (bid, task_id, username) values (50, 108, 'bob');
+insert into bids (bid, task_id, username) values (50, 109, 'bob');
+insert into bids (bid, task_id, username) values (50, 110, 'bob');
 insert into bids (bid, task_id, username) values (91, 1, 'vthieme2s');
 insert into bids (bid, task_id, username) values (104, 2, 'dallderidge2t');
 insert into bids (bid, task_id, username) values (126, 3, 'ualdous2u');
@@ -458,4 +479,6 @@ insert into bids (bid, task_id, username) values (126, 47, 'malbasiny42');
 insert into bids (bid, task_id, username) values (111, 48, 'mgreser43');
 insert into bids (bid, task_id, username) values (113, 49, 'nnunnery44');
 insert into bids (bid, task_id, username) values (110, 50, 'nkiddey45');
+
+
 END;

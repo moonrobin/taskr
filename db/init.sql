@@ -1,4 +1,7 @@
 DROP TABLE IF EXISTS users, tasks, bids;
+DROP TYPE IF EXISTS STATE;
+DROP FUNCTION IF EXISTS check_task_award_validity();
+DROP TRIGGER IF EXISTS task_awarded_trigger ON tasks;
 
 CREATE TYPE STATE AS ENUM ('bidding','awarded', 'unfulfilled', 'complete');
 
@@ -49,18 +52,23 @@ CREATE TABLE bids
   PRIMARY KEY (task_id, username)
 );
 
--- Trigger for checking the validity of task awarding.
+-- Function for checking the validity of task awarding.
 -- When the best bid is awarded to a user who has already
 -- accepted a task with an overlapping time, invalidate the task (set it to unfulfilled)
-
-DROP FUNCTION IF EXISTS check_task_award_validity();
-
 CREATE OR REPLACE FUNCTION check_task_award_validity() RETURNS TRIGGER AS $func2$
 BEGIN
   IF NEW.state = 'awarded' AND NEW.taskstarttime <> '-infinity' THEN
     UPDATE tasks
     SET state = 'unfulfilled', awardedTo = NULL
-    WHERE id = NEW.id AND EXISTS (SELECT * FROM tasks AS t2 WHERE t2.awardedTo = NEW.awardedTo AND t2.id <> NEW.id AND t2.taskStartTime <> '-infinity' AND (taskStartTime, taskEndTime) OVERLAPS (t2.taskStartTime, t2.taskEndTime));
+    WHERE id = NEW.id
+    AND EXISTS (
+      SELECT 1
+      FROM tasks AS t2
+      WHERE t2.awardedTo = NEW.awardedTo
+      AND t2.id <> NEW.id
+      AND t2.taskStartTime <> '-infinity'
+      AND (taskStartTime, taskEndTime) OVERLAPS (t2.taskStartTime, t2.taskEndTime)
+    );
   END IF;
   RETURN NEW;
 END;
@@ -69,4 +77,4 @@ $func2$ LANGUAGE plpgsql;
 CREATE TRIGGER task_awarded_trigger
   AFTER UPDATE ON tasks
   FOR EACH ROW
-  EXECUTE PROCEDURE update_tasks_table_on_delete();
+  EXECUTE PROCEDURE check_task_award_validity();

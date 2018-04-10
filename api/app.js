@@ -96,7 +96,8 @@ app.get('/login/:username/:password', function(req, res){
       console.log(err.stack);
     } else {
       if (result.rows[0]) {
-        req.session.user = result.rows[0].username;  
+        req.session.user = result.rows[0].username;
+        req.session.admin = result.rows[0].admin;
         console.log( 'Logged in as user ' + req.session.user );
         res.sendStatus(200);
       } else {
@@ -112,12 +113,11 @@ app.get('/logout', auth, function (req, res) {
   console.log( 'Logged out as user: ' + req.session.user );
   req.session = null;
   res.sendStatus(200); // replace with static page/redirect
-
 });
 
 // Sign-up endpoint
 app.post('/createuser/:username/:password/:name', function(req, res){
-  var queryText = `INSERT INTO users VALUES($1, MD5($2), $3)`;
+  var queryText = `INSERT INTO users (username, password, name) VALUES($1, MD5($2), $3)`;
   values = [req.params.username, req.params.password, req.params.name];
   client.query(queryText, values, (err, result) => {
     if (err) {
@@ -136,8 +136,29 @@ app.get('/content', auth, function (req, res) {
   res.send('User will be able to see this only after they login');
 });
 
+// score endpoint
+app.get('/score', function(req, res){ // TODO: add auth back in  
+  var values = [req.query.username ? req.query.username : req.session.user];
+  var queryText = `
+    SELECT count(*) as score
+    FROM tasks
+    WHERE state = 'complete'
+    AND (requester = $1 OR awardedto = $1)
+    AND awardedto <> requester
+  `;
+
+  client.query(queryText, values, (err, result) => {
+    if (err) {
+      console.log(err.stack);
+    } else {
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(result.rows));
+    }
+  });
+});
+
 // tasks endpoint
-app.get('/tasks', function(req, res){ // TODO: add auth back in
+app.get('/tasks', function(req, res){
   var values;
   var queryText;
   
