@@ -37,7 +37,7 @@ class LoginForm extends React.Component{
     var url = `http://localhost:3000/login/${this.refs.username.value}/${this.refs.password.value}`
     fetch(url, fetchOptions).then(function(response) {
       if (response.ok) {
-        history.push('/profile');
+        history.push('/user');
       } else {
         alert('Invalid username or password');
         this.refs.username.value = '';

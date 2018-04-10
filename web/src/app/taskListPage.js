@@ -24,15 +24,16 @@ class TaskListPage extends React.Component{
 
     var header = 
         <div id='task-listing-header'>
-          <TaskRow header title="Task"
-                          requester="Requester"
-                          acceptbid="Accept Bid"
-                          startbid="Starting Bid"
-                          currentbid="Current Bid"
-                          taskstarttime="Start Time"
-                          taskendtime="End Time"
-                          accepttime="Bidding Ends"
-                          details="Details"/>
+          <TaskRow header
+            title="Task"
+            requester="Requester"
+            acceptbid="Accept Bid"
+            startbid="Starting Bid"
+            currentbid="Current Bid"
+            taskstarttime="Start Time"
+            taskendtime="End Time"
+            accepttime="Bidding Ends"
+            details="Details"/>
         </div>;
     rows = rows.length ? rows : <TaskRow empty="True" />
     return(

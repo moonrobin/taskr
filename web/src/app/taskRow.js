@@ -22,21 +22,24 @@ class TaskRow extends React.Component {
   delete(){
     var taskId = this.props.id;
     var deleteApiUrl = `http://localhost:3000/deletetask/${taskId}`;
-
-    fetch( deleteApiUrl, { method: 'DELETE', credentials:'include'})
-    .then( function(res){
-      if( res.ok){
+    fetch( deleteApiUrl, { method: 'DELETE', credentials:'include'}).then( function(res){
+      if(res.ok){
         alert('Task deleted!');
       }
-    })
+    });
+  }
+
+  renderDeleteButton() {
+    return (
+      <div id='item-box'>
+        <div id='delete'>
+          <button id="delete-button" type="button" onClick={this.delete}>Delete</button>
+        </div>
+      </div>
+    );
   }
 
   render() {
-    var deleteButton;
-    if (this.props.type === "update"){
-      deleteButton = <button id="delete-button" type="button" onClick={this.delete}>Delete</button>;
-    }
-
     if(this.props.header) {
       return(
         <div>
@@ -46,7 +49,7 @@ class TaskRow extends React.Component {
             </div>
           </div>
           <div id='item-box'>
-            <div id='requestor-id'>
+            <div id='requester'>
               {this.props.requester}
             </div>
           </div>
@@ -93,59 +96,56 @@ class TaskRow extends React.Component {
           No tasks were found.
         </div>
       );
-
     }
+
     return(
       <div id='row'>
         <div id='item-box'>
-            <div id='name'>
-              {this.props.title}
-            </div>
+          <div id='name'>
+            {this.props.title}
           </div>
-          <div id='item-box'>
-            <div id='requestor-id'>
-              {this.props.requester}
-            </div>
+        </div>
+        <div id='item-box'>
+          <div id='requester'>
+            {this.props.requester}
           </div>
-          <div id='item-box'>
-            <div id='start-time'>
-              {this.props.taskstarttime}
-            </div>
+        </div>
+        <div id='item-box'>
+          <div id='start-time'>
+            {this.props.taskstarttime}
           </div>
-          <div id='item-box'>
-            <div id='end-time'>
-              {this.props.taskendtime}
-            </div>
+        </div>
+        <div id='item-box'>
+          <div id='end-time'>
+            {this.props.taskendtime}
           </div>
-          <div id='item-box'>
-            <div id='accept-time'>
-              {this.props.accepttime}
-            </div>
+        </div>
+        <div id='item-box'>
+          <div id='accept-time'>
+            {this.props.accepttime}
           </div>
-          <div id='item-box'>
-            <div id='starting-bid'>
-              {this.props.startbid == null ? "None" : `$${this.props.startbid}`}
-            </div>
+        </div>
+        <div id='item-box'>
+          <div id='starting-bid'>
+            {this.props.startbid == null ? "None" : `$${this.props.startbid}`}
           </div>
-          <div id='item-box'>
-            <div id='accept-bid'>
-              {this.props.acceptbid == null ? "None" : `$${this.props.acceptbid}`}
-            </div>
+        </div>
+        <div id='item-box'>
+          <div id='accept-bid'>
+            {this.props.acceptbid == null ? "None" : `$${this.props.acceptbid}`}
           </div>
-          <div id='item-box'>
-            <div id='details'>
-              {this.props.details}
-            </div>
-          </div>
+        </div>
         <div id='item-box'>
           <div id='current-bid'>
             {this.props.currentbid == null ? "No Bids" : `$${this.props.currentbid}`}
           </div>
         </div>
         <div id='item-box'>
-          <button id="details-button" type="button" onClick={this.popup}>{this.props.type ? 'Edit': 'Details' }</button>
-          {deleteButton}
+          <div id='details'>
+            <button id="details-button" type="button" onClick={this.popup}>{this.props.type ? 'Edit': 'Details' }</button>
+          </div>
         </div>
+        {this.props.type === "update" && this.renderDeleteButton()}
       </div>
     );
   }

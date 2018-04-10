@@ -11,6 +11,18 @@ var style = {
 class MenuBar extends React.Component {
   constructor(props) {
     super(props);
+    this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  handleLogout() {
+      // this will clear the session cookies.
+      fetch('http://localhost:3000/logout', {method: "GET", credentials: 'include' }).then(function(response){
+        if (response.ok) {
+            console.log('Logout successful');
+        } else {
+            console.log('Logout failed!');
+        }
+      });
   }
 
   render() {
@@ -30,6 +42,9 @@ class MenuBar extends React.Component {
         </div>
         <div id='menu-bar-item'>
           <Link to={'/user'} style={style}>My Profile</Link>
+        </div>
+        <div id='menu-bar-item'>
+          <Link to={'/'} style={style} onClick={this.handleLogout}>Logout</Link>
         </div>
       </div>
     );

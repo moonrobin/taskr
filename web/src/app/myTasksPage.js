@@ -24,17 +24,18 @@ class MyTasksPage extends TaskListPage{
 
     var header = 
         <div id='task-listing-header'>
-          <TaskRow header title="Task"
-                          requester="Requester"
-                          acceptbid="Accept Bid"
-                          startbid="Starting Bid"
-                          currentbid="Current Bid"
-                          taskstarttime="Start Time"
-                          taskendtime="End Time"
-                          accepttime="Bidding Ends"
-                          details="Details"/>
+          <TaskRow header
+              title="Task"
+              requester="Requester"
+              acceptbid="Accept Bid"
+              startbid="Starting Bid"
+              currentbid="Current Bid"
+              taskstarttime="Start Time"
+              taskendtime="End Time"
+              accepttime="Bidding Ends"
+              details="Details"/>
         </div>;
-    rows = rows.length ? rows : <TaskRow empty="True"/>
+    rows = rows.length ? rows : <TaskRow empty/>
     return(
       <div id='task-listing'>
         {header}
