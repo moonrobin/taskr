@@ -137,7 +137,7 @@ app.get('/content', auth, function (req, res) {
 });
 
 // score endpoint
-app.get('/score', function(req, res){ // TODO: add auth back in  
+app.get('/user', function(req, res){ // TODO: add auth back in  
   var values = [req.query.username ? req.query.username : req.session.user];
   var queryText = `
     SELECT count(*) as score
@@ -151,8 +151,23 @@ app.get('/score', function(req, res){ // TODO: add auth back in
     if (err) {
       console.log(err.stack);
     } else {
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(result.rows));
+        var score = result.rows[0].score;
+        var queryText = `
+          SELECT username, name, admin
+          FROM users
+          WHERE username = $1
+        `;
+
+        client.query(queryText, values, (err, result) => {
+          if (err) {
+            console.log(err.stack);
+          } else {
+              result.rows[0].score = score;
+              
+              res.setHeader('Content-Type', 'application/json');
+              res.send(JSON.stringify(result.rows));
+          }
+        });
     }
   });
 });
