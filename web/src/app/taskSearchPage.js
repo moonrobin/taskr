@@ -11,6 +11,23 @@ class TaskSearchPage extends TaskListPage{
   constructor(props) {
     super(props);
     this.querySubmit = this.querySubmit.bind(this);
+    this.checkAdmin = this.checkAdmin.bind(this);
+  }
+
+
+  // checks if current user is an admin.
+  checkAdmin(){
+    var userApiUrl = `http://localhost:3000/user`;
+    var that = this;
+    return fetch( userApiUrl, { method: 'GET', credentials:'include'})
+    .then( function(res){
+      return res.json();
+    }).then( function(resjson){
+      // console.log(resjson[0].admin);
+      that.setState({
+        admin: resjson[0].admin
+      });
+    });
   }
 
   querySubmit(e){
@@ -30,7 +47,6 @@ class TaskSearchPage extends TaskListPage{
         return res.json();
     }).then( function(resjson){
         data = resjson;
-        console.log( data );
         that.setState({
           data: data
         });

@@ -24,12 +24,30 @@ class TaskDisplayPage extends React.Component{
     super(props);
     this.state = {
       data: null,
-      taskId: null
+      taskId: null,
+      admin: false
     };
     this.queryTask = this.queryTask.bind(this);
     this.bidTask = this.bidTask.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
+    this.checkAdmin = this.checkAdmin.bind(this);
     this.queryTask();
+    this.checkAdmin();
+  }
+
+  // checks if current user is an admin.
+  checkAdmin(){
+    var userApiUrl = `http://localhost:3000/user`;
+    var that = this;
+    return fetch( userApiUrl, { method: 'GET', credentials:'include'})
+    .then( function(res){
+      return res.json();
+    }).then( function(resjson){
+      // console.log(resjson[0].admin);
+      that.setState({
+        admin: resjson[0].admin
+      });
+    });
   }
 
   queryTask(){
@@ -49,7 +67,6 @@ class TaskDisplayPage extends React.Component{
         return res.json();
     }).then( function(resjson){
         data = resjson;
-        console.log( JSON.stringify(data[0]));
         that.setState({
           data: data[0],
           taskId: taskId
@@ -89,6 +106,9 @@ class TaskDisplayPage extends React.Component{
       }
     }
 
+    var deleteButton = <button id="delete-button" type="button" onClick={this.deleteTask}>Delete</button>
+    deleteButton = this.state.admin ? deleteButton : null;
+
     if ( !rows.length ){
       return(
         <div>
@@ -106,7 +126,7 @@ class TaskDisplayPage extends React.Component{
           <input type="number" min="0" ref="bidproposal" placeholder="Place a bid..."/>
         </div>
         <button id="bid-button" type="button" onClick={this.bidTask}>Bid</button>
-        <button id="delete-button" type="button" onClick={this.deleteTask}>Delete</button>
+        {deleteButton}
       </div>
     );
   }

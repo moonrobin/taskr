@@ -27,7 +27,6 @@ class MyBidsPage extends TaskListPage{
         return res.json();
     }).then( function(resjson){
         data = resjson;
-        console.log( 'Aaaa' );
         that.setState({
           data: data
         });

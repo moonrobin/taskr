@@ -9,7 +9,8 @@ class TaskListPage extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      data: null
+      data: null,
+      isAdmin: false
     };
     this.renderList = this.renderList.bind(this);
     this.deleteRow = this.deleteRow.bind(this);
@@ -33,6 +34,11 @@ class TaskListPage extends React.Component{
         key: key,
         onDelete: this.deleteRow
       });
+      if( this.state.isAdmin ){
+        row = React.cloneElement( row, {
+          type: "update"
+        });
+      }
       rows.push(row);
     }
 
