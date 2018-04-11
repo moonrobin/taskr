@@ -12,6 +12,7 @@ class TaskSearchPage extends TaskListPage{
     super(props);
     this.querySubmit = this.querySubmit.bind(this);
     this.checkAdmin = this.checkAdmin.bind(this);
+    this.checkAdmin();
   }
 
 
