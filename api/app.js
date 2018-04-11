@@ -43,7 +43,7 @@ cron.schedule('* * * * *', function(){
   UPDATE tasks
   SET state = 'unfulfilled'
   WHERE state = 'bidding' AND NOT EXISTS (SELECT * FROM bids WHERE task_id = id) AND LOCALTIMESTAMP(0) >= acceptTime;
-  `
+  `;
   client.query(unfulfilledQuery, (err, result) => {
     if (err) {
       console.log(err.stack);
@@ -55,8 +55,8 @@ cron.schedule('* * * * *', function(){
   var awardedQuery = `
   UPDATE tasks
   SET state = 'awarded', awardedto = (SELECT username FROM bids WHERE task_id = id AND bid = currentBid LIMIT 1)
-  WHERE state = 'bidding' AND EXISTS (SELECT * FROM bids WHERE task_id = id) AND (LOCALTIMESTAMP(0) >= acceptTime OR currentBid <= acceptBid);
-  `
+  WHERE state = 'bidding' AND EXISTS (SELECT * FROM bids WHERE task_id = id) AND LOCALTIMESTAMP(0) >= acceptTime;
+  `;
   client.query(awardedQuery, (err, result) => {
     if (err) {
       console.log(err.stack);
@@ -69,7 +69,7 @@ cron.schedule('* * * * *', function(){
   UPDATE tasks
   SET state = 'complete'
   WHERE state = 'awarded' AND LOCALTIMESTAMP(0) >= taskEndTime;
-  `
+  `;
   client.query(completedQuery, (err, result) => {
     if (err) {
       console.log(err.stack);

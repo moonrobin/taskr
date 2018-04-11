@@ -9,13 +9,14 @@ import './css/displaypage.css';
 var d = {
   "title":  "Title",
   "description":  "Description",
-  "requestor":  "Requestor",
+  "requester":  "Requestor",
   "startbid": "Starting Bid",
   "currentbid": "Current Bid",
   "acceptbid": "Accept Bid",
   "accepttime": "Accept Time",
   "taskstarttime": "Task Start Time",
-  "taskendtime":  "Task End Time"
+  "taskendtime":  "Task End Time",
+  "state": "Task Status"
 };
 
 class TaskDisplayPage extends React.Component{
@@ -92,7 +93,7 @@ class TaskDisplayPage extends React.Component{
       return(
         <div>
           <h3>Task Details</h3>
-          <p> Task not found </p>
+          <p>Task not found</p>
         </div>
       );
     }

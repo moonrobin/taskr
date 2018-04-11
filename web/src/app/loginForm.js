@@ -19,11 +19,6 @@ class LoginForm extends React.Component{
     return (
       <div>
         <h3>Taskr</h3>
-        <div><Link to={'/create'}>Create Account</Link></div>
-        <div><Link to={'/search'}>Task Search</Link></div>
-        <div><Link to={'/task'}>Task Display</Link></div>
-        <div><Link to={'/mytasks'}>My Tasks</Link></div>
-        <div><Link to={'/mybids'}>My Bids</Link></div>
         <div id="login-form">
           <form id="username-input">
             <input type="text" required ref="username" placeholder="Username"/>
@@ -42,7 +37,7 @@ class LoginForm extends React.Component{
     var url = `http://localhost:3000/login/${this.refs.username.value}/${this.refs.password.value}`
     fetch(url, fetchOptions).then(function(response) {
       if (response.ok) {
-        history.push('/profile');
+        history.push('/user');
       } else {
         alert('Invalid username or password');
         this.refs.username.value = '';
