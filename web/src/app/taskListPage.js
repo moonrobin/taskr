@@ -53,6 +53,7 @@ class TaskListPage extends React.Component{
             taskstarttime="Start Time"
             taskendtime="End Time"
             accepttime="Bidding Ends"
+            state="Status"
             details="Details"/>
         </div>;
     rows = rows.length ? rows : <TaskRow empty="True" />

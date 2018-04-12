@@ -86,6 +86,11 @@ class TaskRow extends React.Component {
             </div>
           </div>
           <div id='item-box'>
+            <div id='status'>
+              {this.props.state}
+            </div>
+          </div>
+          <div id='item-box'>
             <div id='details'>
               {this.props.details}
             </div>
@@ -140,6 +145,11 @@ class TaskRow extends React.Component {
         <div id='item-box'>
           <div id='current-bid'>
             {this.props.currentbid == null ? "No Bids" : `$${this.props.currentbid}`}
+          </div>
+        </div>
+        <div id='item-box'>
+          <div id='status'>
+            {this.props.state}
           </div>
         </div>
         <div id='item-box'>

@@ -15,7 +15,6 @@ class TaskSearchPage extends TaskListPage{
     this.checkAdmin();
   }
 
-
   // checks if current user is an admin.
   checkAdmin(){
     var userApiUrl = `http://localhost:3000/user`;
