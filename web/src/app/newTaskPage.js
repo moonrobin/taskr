@@ -90,11 +90,11 @@ class NewTaskPage extends React.Component{
             </div>
             <div id="taskfieldname">Accept Bid</div>
             <div id="taskfieldvalue"> 
-              <input type="number" min="0" ref="acceptbid"/>
+              <input type="number" step="0.01" min="0" ref="acceptbid"/>
             </div>
             <div id="taskfieldname">Starting Bid (required)</div>
             <div id="taskfieldvalue"> 
-              <input type="number" min="0" ref="startingbid"/>
+              <input type="number" step="0.01" min="0" ref="startingbid"/>
             </div>
             <div id="taskfieldname">Task Description</div>
             <div id="taskfieldvalue"> 

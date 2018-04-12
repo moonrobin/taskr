@@ -57,7 +57,7 @@ CREATE TABLE bids
 -- Function for checking the validity of task awarding.
 -- When the best bid is awarded to a user who has already
 -- accepted a task with an overlapping time, invalidate the task (set it to unfulfilled)
-CREATE OR REPLACE FUNCTION tasks_table_updated_trigger_function() RETURNS TRIGGER AS $func2$
+CREATE OR REPLACE FUNCTION tasks_table_updated_trigger_function() RETURNS TRIGGER AS $func1$
 BEGIN
   IF NEW.currentBid <= NEW.acceptBid THEN
     UPDATE tasks
@@ -80,7 +80,7 @@ BEGIN
   END IF;
   RETURN NEW;
 END;
-$func2$ LANGUAGE plpgsql;
+$func1$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION tasks_table_created_trigger_function() RETURNS TRIGGER AS $func2$
 BEGIN

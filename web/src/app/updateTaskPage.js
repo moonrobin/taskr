@@ -96,11 +96,11 @@ class UpdateTaskPage extends React.Component{
               </div>
               <div id="taskfieldname">Accept Bid </div>
               <div id="taskfieldvalue"> 
-                <input defaultValue={this.state.data.acceptbid} type="number" min="0" ref="acceptbid" placeholder="Name an accept bid price"/>
+                <input defaultValue={this.state.data.acceptbid} type="number" step="0.01" min="0" ref="acceptbid" placeholder="Name an accept bid price"/>
               </div>
               <div id="taskfieldname">Starting Bid (required)</div>
               <div id="taskfieldvalue"> 
-                <input disabled className="readonly" value={this.state.data.startbid} type="number" readOnly="true" min="0" ref="startingbid" placeholder="Name a starting bid price"/>
+                <input disabled className="readonly" value={this.state.data.startbid} type="number" step="0.01" readOnly="true" min="0" ref="startingbid" placeholder="Name a starting bid price"/>
               </div>
               <div id="taskfieldname">Task Description</div>
               <div id="taskfieldvalue"> 
