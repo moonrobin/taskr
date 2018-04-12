@@ -52,6 +52,11 @@
     width: 80px;
 }
 
+#status {
+    width: 80px;
+}
+
+
 #details {
     float: left;
     width: 66px;
