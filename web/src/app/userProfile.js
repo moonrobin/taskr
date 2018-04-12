@@ -7,7 +7,10 @@ class UserProfile extends React.Component{
   	constructor(props) {
 		super(props);
 		this.state = {
-			data: null
+			name: null,
+			score: null,
+			username: null,
+			admin: null
 		};
 		this.handleLogout = this.handleLogout.bind(this);
 		this.fetch();
@@ -17,15 +20,24 @@ class UserProfile extends React.Component{
 	    if (e){ 
 	      e.preventDefault();
 	    }
-	    var api_url = `http://localhost:3000/score`;
-	    var data;
+	    var currentUrl = window.location.href;
+	    var api_url = `http://localhost:3000/user`;
+      	var matches = /user\/(\w+?)\b/.exec(currentUrl); 
+      	if( matches ){
+      		api_url += `?username=${matches[1]}`;
+      	}
+
+
 	    var that = this;
 	    fetch(api_url, { method: 'GET', credentials:'include'}).then(function(res) {
 	        return res.json();
 	    }).then(function(resjson) {
-	        data = resjson;
+	        console.log( resjson[0] ); 
 	        that.setState({
-	          data: data[0]['score']
+	          name: resjson[0].name,
+	          score: resjson[0].score,
+	          username: resjson[0].username,
+	          admin: resjson[0].admin
 	        });
 	    });
 	}
@@ -45,7 +57,9 @@ class UserProfile extends React.Component{
 		return(
 	      <div>
 	      	<MenuBar/>
-	      	<div id="label">{`Score: ${this.state.data}`}</div>
+	      	<div id="label">{`Name: ${this.state.name}`}</div>
+	      	<div id="label">{`Username: ${this.state.username}`}</div>
+	      	<div id="label">{`Score: ${this.state.score}`}</div>
 	        <Link to={'/'} onClick={this.handleLogout}>Logout</Link>
 	      </div>
 	    );
