@@ -103,7 +103,7 @@ class TaskDisplayPage extends React.Component{
     var rows = [];
     for(var key in this.state.data) {
       if(key != "id" && this.state.data[key] != null) {
-        var row = <DetailItem attr={d[key]} value={this.state.data[key]}/>;
+        var row = <DetailItem key={key} field={key} attr={d[key]} value={this.state.data[key]}/>;
         rows.push(row);
       }
     }
