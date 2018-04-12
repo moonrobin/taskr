@@ -13,7 +13,9 @@ class CreateProfile extends React.Component{
     return(
       <div>
         <h3>Create Account</h3>
-        <Link to={'/'}>Login</Link>
+        <div id='login-link'>
+          <Link to={'/'}>Back To Login</Link>
+        </div>
         <div id="create-profile-form">
           <form id="username-input">
             <input type="text" required ref="username" placeholder="Username"/>

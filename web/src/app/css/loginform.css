@@ -27,3 +27,7 @@
     text-transform: uppercase;
     cursor: pointer;
 }
+
+#create-account-link {
+    margin: 10px 0 10px 0;
+}
