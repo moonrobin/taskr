@@ -162,7 +162,9 @@ app.get('/user', function(req, res){ // TODO: add auth back in
           if (err) {
             console.log(err.stack);
           } else {
-              result.rows[0].score = score;
+              if(result.rows){
+                result.rows[0].score = score;
+              }
               
               res.setHeader('Content-Type', 'application/json');
               res.send(JSON.stringify(result.rows));
