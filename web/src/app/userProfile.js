@@ -75,7 +75,6 @@ class UserProfile extends React.Component{
 	      	<MenuBar/>
 	      	<h3>Profile</h3>
 	      	{rows}
-	        <Link to={'/'} onClick={this.handleLogout}>Logout</Link>
 	      </div>
 	    );
  	}
