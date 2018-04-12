@@ -78,6 +78,7 @@ BEGIN
       AND (taskStartTime, taskEndTime) OVERLAPS (t2.taskStartTime, t2.taskEndTime)
     );
   END IF;
+
   RETURN NEW;
 END;
 $func1$ LANGUAGE plpgsql;
