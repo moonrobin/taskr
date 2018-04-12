@@ -41,6 +41,9 @@ class NewTaskPage extends React.Component{
     if ( accepttime ){
       api_url +=  `&accepttime=${accepttime}`;
     }
+    if ( acceptbid ){
+      api_url +=  `&acceptbid=${acceptbid}`;
+    }
     if ( desc ){
       api_url += `&description=${desc}`;``
     }
