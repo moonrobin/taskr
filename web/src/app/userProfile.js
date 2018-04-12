@@ -2,12 +2,23 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 import MenuBar from './menuBar.js';
+import DetailItem from './detailItem.js';
+
+var d = {
+  "name":  "Name",
+  "username":  "Username",
+  "score":  "Score",
+  // "admin": "User Privilege",
+};
 
 class UserProfile extends React.Component{
   	constructor(props) {
 		super(props);
 		this.state = {
-			data: null
+			name: null,
+			score: null,
+			username: null,
+			admin: null
 		};
 		this.handleLogout = this.handleLogout.bind(this);
 		this.fetch();
@@ -17,15 +28,24 @@ class UserProfile extends React.Component{
 	    if (e){ 
 	      e.preventDefault();
 	    }
-	    var api_url = `http://localhost:3000/score`;
-	    var data;
+	    var currentUrl = window.location.href;
+	    var api_url = `http://localhost:3000/user`;
+      	var matches = /user\/(\w+?)\b/.exec(currentUrl); 
+      	if( matches ){
+      		api_url += `?username=${matches[1]}`;
+      	}
+
+
 	    var that = this;
 	    fetch(api_url, { method: 'GET', credentials:'include'}).then(function(res) {
 	        return res.json();
 	    }).then(function(resjson) {
-	        data = resjson;
+	        console.log( resjson[0] ); 
 	        that.setState({
-	          data: data[0]['score']
+	          name: resjson[0].name,
+	          score: resjson[0].score,
+	          username: resjson[0].username,
+	          admin: resjson[0].admin
 	        });
 	    });
 	}
@@ -42,11 +62,19 @@ class UserProfile extends React.Component{
 	}
 
 	render() {
+	    var rows = [];
+	    for(var key in this.state) {
+	      if(key != "id" && this.state[key] != null) {
+	        var row = <DetailItem attr={d[key]} value={this.state[key]}/>;
+	        rows.push(row);
+	      }
+	    }
+
 		return(
 	      <div>
 	      	<MenuBar/>
-	      	<div id="label">{`Score: ${this.state.data}`}</div>
-	        <Link to={'/'} onClick={this.handleLogout}>Logout</Link>
+	      	<h3>Profile</h3>
+	      	{rows}
 	      </div>
 	    );
  	}

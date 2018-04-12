@@ -4,6 +4,7 @@ import history from './history';
 
 import DetailItem from './detailItem.js';
 import mockData from './mockdata/data2.js';
+import MenuBar from './menuBar.js';
 import './css/displaypage.css'; 
 
 var d = {
@@ -16,7 +17,8 @@ var d = {
   "accepttime": "Accept Time",
   "taskstarttime": "Task Start Time",
   "taskendtime":  "Task End Time",
-  "state": "Task Status"
+  "state": "Task Status",
+  "awardedto": "Awarded to"
 };
 
 class TaskDisplayPage extends React.Component{
@@ -101,7 +103,7 @@ class TaskDisplayPage extends React.Component{
     var rows = [];
     for(var key in this.state.data) {
       if(key != "id" && this.state.data[key] != null) {
-        var row = <DetailItem attr={d[key]} value={this.state.data[key]}/>;
+        var row = <DetailItem key={key} field={key} attr={d[key]} value={this.state.data[key]}/>;
         rows.push(row);
       }
     }
@@ -112,6 +114,7 @@ class TaskDisplayPage extends React.Component{
     if ( !rows.length ){
       return(
         <div>
+        <MenuBar/>
           <h3>Task Details</h3>
           <p>Task not found</p>
         </div>
@@ -120,6 +123,7 @@ class TaskDisplayPage extends React.Component{
 
     return(
       <div>
+        <MenuBar/>
         <h3>Task Details</h3>
         {rows}
         <div id="taskfieldvalue" style={{display:'inline-block'}}>
