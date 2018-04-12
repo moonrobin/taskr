@@ -321,7 +321,8 @@ app.post('/updatetask/:taskid', function(req, res){
   UPDATE tasks
   SET acceptbid = ${req.query.acceptbid || 'acceptbid'},
   description = ${req.query.description ? "'"+ req.query.description+"'" : 'description'},
-  accepttime = ${req.query.accepttime ? "'"+req.query.accepttime+"'" : 'accepttime'}
+  accepttime = ${req.query.accepttime ? "'"+req.query.accepttime+"'" : 'accepttime'},
+  state = ${req.query.state ? "'"+req.query.state+"'" : 'state'}
   WHERE id = $1
   `;
   console.log(queryText)
