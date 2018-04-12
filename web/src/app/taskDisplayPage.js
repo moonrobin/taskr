@@ -27,17 +27,20 @@ class TaskDisplayPage extends React.Component{
     this.state = {
       data: null,
       taskId: null,
-      admin: false
+      admin: false,
+      user:null,
+      awardedto: null
     };
     this.queryTask = this.queryTask.bind(this);
     this.bidTask = this.bidTask.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
+    this.completeTask = this.completeTask.bind(this);
     this.checkAdmin = this.checkAdmin.bind(this);
     this.queryTask();
     this.checkAdmin();
   }
 
-  // checks if current user is an admin.
+  // checks if current user is an admin / user has complete privileges
   checkAdmin(){
     var userApiUrl = `http://localhost:3000/user`;
     var that = this;
@@ -46,8 +49,10 @@ class TaskDisplayPage extends React.Component{
       return res.json();
     }).then( function(resjson){
       // console.log(resjson[0].admin);
+      console.log( resjson);
       that.setState({
-        admin: resjson[0].admin
+        admin: resjson[0].admin,
+        user: resjson[0].username
       });
     });
   }
@@ -68,10 +73,12 @@ class TaskDisplayPage extends React.Component{
     .then(function(res){
         return res.json();
     }).then( function(resjson){
+      console.log( resjson);
         data = resjson;
         that.setState({
           data: data[0],
-          taskId: taskId
+          taskId: taskId,
+          awardedto: data[0].awardedto
         });
     });   
 
@@ -79,11 +86,8 @@ class TaskDisplayPage extends React.Component{
 
   bidTask() {
     var bid = this.refs.bidproposal.value;
-
     var createBidApiUrl = `http://localhost:3000/bid/${this.state.taskId}/${bid}/`;
-
     var that = this;
-
     fetch( createBidApiUrl, { method: 'POST', credentials:'include'})
     .then(function(res){
         if( res.ok ){
@@ -96,7 +100,31 @@ class TaskDisplayPage extends React.Component{
   }
 
   deleteTask() {
-    var deleteTaskApiUrl = `http://localhost:3000`;
+    // TODO: confirmation delete
+    var deleteTaskApiUrl = `http://localhost:3000/deletetask/${this.state.taskId}`;
+    fetch( deleteTaskApiUrl, {method: 'POST', credentials:'include'})
+    .then( function(rest){
+      if( res.ok ){
+        alert('Task deleted');
+      } else {
+        alert('Couldn\'t delete task')
+      }
+    })
+  }
+
+  completeTask() {
+    var apiUrl = `http://localhost:3000/updatetask/
+    ${this.state.taskId}/?state=complete`;
+    var that = this;
+    fetch( apiUrl, { method: 'POST', credentials:'include'})
+    .then(function(res){
+        if( res.ok ){
+          alert('Completed task succesfully');
+          that.queryTask();
+        } else {
+          alert('Failed to complete task');
+        }
+    })
   }
 
   render() {
@@ -108,8 +136,16 @@ class TaskDisplayPage extends React.Component{
       }
     }
 
-    var deleteButton = <button id="delete-button" type="button" onClick={this.deleteTask}>Delete</button>
+    var deleteButton = <button id="delete-button" type="button" onClick={this.deleteTask}>Delete</button>;
     deleteButton = this.state.admin ? deleteButton : null;
+
+    var completeButton = null; 
+    console.log (this.state);
+    if ( this.state.user && this.state.awardedto ){
+      if ( this.state.user === this.state.awardedto){
+          completeButton = <button id="complete-button" type="button" onClick={this.completeTask}>Complete</button>;
+        }
+    }
 
     if ( !rows.length ){
       return(
@@ -131,6 +167,8 @@ class TaskDisplayPage extends React.Component{
         </div>
         <button id="bid-button" type="button" onClick={this.bidTask}>Bid</button>
         {deleteButton}
+        {completeButton}
+
       </div>
     );
   }
