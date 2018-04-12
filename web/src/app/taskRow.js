@@ -5,17 +5,20 @@ import './css/taskrow.css';
 class TaskRow extends React.Component {
   constructor(props) {
     super(props);
-    this.popup = this.popup.bind(this);
+    this.popupDetails = this.popupDetails.bind(this);
+    this.popupUpdate = this.popupUpdate.bind(this);
     this.delete = this.delete.bind(this);
   }
 
-  popup() {
+  popupUpdate() {
     var url;
-    if (this.props.type === "update"){
-      url = `/update/${this.props.id}`
-    } else {
-      url = `/task/${this.props.id}`
-    }
+    url = `/update/${this.props.id}`
+    window.open( url, '_blank');
+  }
+
+  popupDetails() {
+    var url;
+    url = `/task/${this.props.id}`
     window.open( url, '_blank');
   }
 
@@ -42,6 +45,10 @@ class TaskRow extends React.Component {
   }
 
   render() {
+    var updateButton = null;
+    if( this.props.type == "update" ){
+      updateButton = <button id="details-button" type="button" onClick={this.popupUpdate}>Edit</button>;
+    }
     if(this.props.header) {
       return(
         <div>
@@ -154,8 +161,9 @@ class TaskRow extends React.Component {
         </div>
         <div id='item-box'>
           <div id='details'>
-            <button id="details-button" type="button" onClick={this.popup}>{this.props.type ? 'Edit': 'Details' }</button>
+            <button id="details-button" type="button" onClick={this.popupDetails}>Details</button>
           </div>
+          {updateButton}
         </div>
         {this.props.type === "update" && this.renderDeleteButton()}
       </div>
