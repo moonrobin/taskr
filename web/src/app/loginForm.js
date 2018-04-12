@@ -19,6 +19,9 @@ class LoginForm extends React.Component{
     return (
       <div>
         <h3>Taskr</h3>
+        <div id='create-account-link'>
+          <Link to={'/create'}>Create An Account</Link>
+        </div>
         <div id="login-form">
           <form id="username-input">
             <input type="text" required ref="username" placeholder="Username"/>
