@@ -2,6 +2,14 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 import MenuBar from './menuBar.js';
+import DetailItem from './detailItem.js';
+
+var d = {
+  "name":  "Name",
+  "username":  "Username",
+  "score":  "Score",
+  // "admin": "User Privilege",
+};
 
 class UserProfile extends React.Component{
   	constructor(props) {
@@ -54,12 +62,19 @@ class UserProfile extends React.Component{
 	}
 
 	render() {
+	    var rows = [];
+	    for(var key in this.state) {
+	      if(key != "id" && this.state[key] != null) {
+	        var row = <DetailItem attr={d[key]} value={this.state[key]}/>;
+	        rows.push(row);
+	      }
+	    }
+
 		return(
 	      <div>
 	      	<MenuBar/>
-	      	<div id="label">{`Name: ${this.state.name}`}</div>
-	      	<div id="label">{`Username: ${this.state.username}`}</div>
-	      	<div id="label">{`Score: ${this.state.score}`}</div>
+	      	<h3>Profile</h3>
+	      	{rows}
 	        <Link to={'/'} onClick={this.handleLogout}>Logout</Link>
 	      </div>
 	    );
