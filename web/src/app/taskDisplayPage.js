@@ -4,6 +4,7 @@ import history from './history';
 
 import DetailItem from './detailItem.js';
 import mockData from './mockdata/data2.js';
+import MenuBar from './menuBar.js';
 import './css/displaypage.css'; 
 
 var d = {
@@ -112,6 +113,7 @@ class TaskDisplayPage extends React.Component{
     if ( !rows.length ){
       return(
         <div>
+        <MenuBar/>
           <h3>Task Details</h3>
           <p>Task not found</p>
         </div>
@@ -120,6 +122,7 @@ class TaskDisplayPage extends React.Component{
 
     return(
       <div>
+        <MenuBar/>
         <h3>Task Details</h3>
         {rows}
         <div id="taskfieldvalue" style={{display:'inline-block'}}>

@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import history from './history';
 import './css/newtaskpage.css';
+import MenuBar from './menuBar.js';
 
 class UpdateTaskPage extends React.Component{
   constructor(props) {
@@ -77,6 +78,7 @@ class UpdateTaskPage extends React.Component{
     if (!this.state.data){
       return(
         <div>
+        <MenuBar/>
           <h3>Update Task</h3>
           <p>Task not found</p>
         </div>
@@ -84,6 +86,7 @@ class UpdateTaskPage extends React.Component{
     }
     return(
       <div>
+        <MenuBar/>
         <h3>Update Existing Task</h3>
         <div>
           <form className="updateform" id="query" onSubmit={this.querySubmit}>
