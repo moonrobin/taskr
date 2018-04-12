@@ -21,9 +21,9 @@ CREATE UNIQUE INDEX upper_index
 CREATE TABLE tasks
 (
   id SERIAL PRIMARY KEY, -- Auto incrementing unique ID for each task
-  startBid REAL NOT NULL, -- Price which bidding starts
-  currentBid REAL, -- Current lowest bid on task (Null indicates no bid was placed)
-  acceptBid REAL DEFAULT 0 NOT NULL, -- If the bid drops to this price, then the task is awarded
+  startBid DECIMAL(10, 2) NOT NULL, -- Price which bidding starts
+  currentBid DECIMAL(10, 2), -- Current lowest bid on task (Null indicates no bid was placed)
+  acceptBid DECIMAL(10, 2) DEFAULT 0.00 NOT NULL, -- If the bid drops to this price, then the task is awarded
   acceptTime TIMESTAMP, -- Optional time to end the bid
   taskStartTime TIMESTAMP DEFAULT '-infinity' NOT NULL,
   taskEndTime TIMESTAMP NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE tasks
 
 CREATE TABLE bids
 (
-  bid REAL NOT NULL,
+  bid DECIMAL(10, 2) NOT NULL,
   task_id SERIAL,
   username VARCHAR(100),
   FOREIGN KEY (task_id) REFERENCES tasks(id)
