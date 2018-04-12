@@ -17,7 +17,8 @@ var d = {
   "accepttime": "Accept Time",
   "taskstarttime": "Task Start Time",
   "taskendtime":  "Task End Time",
-  "state": "Task Status"
+  "state": "Task Status",
+  "awardedto": "Awarded to"
 };
 
 class TaskDisplayPage extends React.Component{
